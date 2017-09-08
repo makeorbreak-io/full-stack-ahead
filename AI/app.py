@@ -2,6 +2,8 @@
 from flask import Flask, request, jsonify
 from controllers.CollaborativeFilteringController import CollaborativeFilteringController
 
+from repositories.mariadb.RatingsRepositoryMariaDB import RatingRepositoryMariaDB #ToDo: deleteme
+from repositories.mariadb.PlacesRepositoryMariaDB import PlacesRepositoryMariaDB #ToDo: deleteme
 
 app = Flask(__name__)
 cfController = CollaborativeFilteringController()
@@ -26,6 +28,26 @@ def test(number):
     return jsonify(
         number=number,
         test=True
+    )
+
+#ToDo: deleteme
+@app.route('/ratings')
+def test_ratings():
+    repo = RatingRepositoryMariaDB(host="maria", port=3306, user="fsa", password="xourixos", db="where2go") #get from env
+    result = repo.get_dataframe_ratings().values.tolist() #returning dataframe as a list
+    return jsonify(
+        test=True,
+        ratings=result
+    )
+
+#ToDo: deleteme
+@app.route('/places')
+def test_places():
+    repo = PlacesRepositoryMariaDB(host="maria", port=3306, user="fsa", password="xourixos", db="where2go") #get from env
+    result = repo.get_dataframe_places().values.tolist() #returning dataframe as a list
+    return jsonify(
+        test=True,
+        ratings=result
     )
 
 if __name__ == '__main__':

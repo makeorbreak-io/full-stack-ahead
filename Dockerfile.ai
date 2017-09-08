@@ -4,6 +4,9 @@ RUN apt-get update && \
     apt-get -y install apt-utils python-tk libmysqlclient-dev 
 
 RUN pip install flask
+RUN pip install matplotlib
+RUN echo "backend : Agg" > /usr/local/lib/python2.7/dist-packages/matplotlib/mpl-data/matplotlibrc
+# https://github.com/matplotlib/matplotlib/issues/8929
 
 RUN pip install virtualenv
 RUN virtualenv flask

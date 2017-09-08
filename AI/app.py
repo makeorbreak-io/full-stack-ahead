@@ -20,7 +20,6 @@ def train():
 @app.route('/predict', methods=['POST'])
 def predict():
     userId = request.form['userId']
-    #return "result for user %s" % cfController.predict(userId=int(userId))
     return jsonify(data = cfController.predict(userId=int(userId)))
 
 @app.route('/test/<number>')
@@ -33,7 +32,7 @@ def test(number):
 #ToDo: deleteme
 @app.route('/ratings')
 def test_ratings():
-    repo = RatingRepositoryMariaDB(host="maria", port=3306, user="fsa", password="xourixos", db="where2go") #get from env
+    repo = RatingsRepositoryMariaDB(host="maria", port=3306, user="fsa", password="xourixos", db="where2go") #get from env
     result = repo.get_dataframe_ratings().values.tolist() #returning dataframe as a list
     return jsonify(
         test=True,

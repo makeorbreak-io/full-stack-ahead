@@ -1,0 +1,25 @@
+version: '2'
+services:
+  core:
+    container_name: mob_core
+    build:
+      context: .
+      dockerfile: Dockerfile.elixir
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./ApiCore:/app
+    links:
+      - maria:maria
+    restart: always
+  maria:
+    container_name: mob_maria
+    image: mariadb:10.3
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=xourixos
+      - MYSQL_DATABASE=where2go
+      - MYSQL_USER=fsa
+      - MYSQL_PASSWORD=xourixos
+    restart: always

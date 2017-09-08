@@ -20,7 +20,7 @@ def train():
 @app.route('/predict', methods=['POST'])
 def predict():
     userId = request.form['userId']
-    return jsonify(data = cfController.predict(userId=int(userId)))
+    return jsonify( data=cfController.predict(userId=int(userId)).values.tolist() )
 
 @app.route('/test/<number>')
 def test(number):

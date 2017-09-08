@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Where2Go</string>
+    <string name="app_name">Where2.go</string>
+
+    <string name="api_ai_access_token">741803b54bf5422292a7c2d875dc4716</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
 </resources>

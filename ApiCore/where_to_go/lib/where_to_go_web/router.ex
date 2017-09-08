@@ -17,7 +17,7 @@ defmodule WhereToGoWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    get "/places", PlacesController, :index
+    get "/restaurants", RestaurantsController, :update_restaurants
   end
 
   # Other scopes may use custom stacks.

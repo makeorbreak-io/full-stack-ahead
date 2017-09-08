@@ -50,9 +50,10 @@ config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
 config :where_to_go, WhereToGo.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "where_to_go_dev",
+  adapter: Ecto.Adapters.MySQL,
+  username: "fsa",
+  password: "xourixos",
+  database: "where2go",
   hostname: "localhost",
+  port: 3307,
   pool_size: 10

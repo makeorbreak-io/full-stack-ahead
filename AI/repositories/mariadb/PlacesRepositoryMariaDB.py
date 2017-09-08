@@ -6,6 +6,8 @@ from repositories.IPlacesRepository import IPlacesRepository
 PLACE_ID_STR = 'PlaceID'
 TITLE_STR = 'Title'
 CATEGORIES_STR = 'Categories'
+PLACE_INDEX_STR = 'Place Index'
+
 
 class PlacesRepositoryMariaDB(IPlacesRepository):
 
@@ -34,6 +36,7 @@ class PlacesRepositoryMariaDB(IPlacesRepository):
         self.__connect__()
         self.places_df = pd.read_sql('select place_id, title, categories from places;', con=self.conn)
         self.places_df.columns = [PLACE_ID_STR, TITLE_STR, CATEGORIES_STR]
+        self.places_df[PLACE_INDEX_STR] = self.places_df.index
         print self.places_df.head()
         self.__disconnect__()
         return self.places_df

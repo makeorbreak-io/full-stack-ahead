@@ -39,6 +39,8 @@ dependencies {
     // AppCompat
     implementation "com.android.support:appcompat-v7:$support_lib_version"
     implementation "com.android.support:design:$support_lib_version"
+    implementation "com.android.support:cardview-v7:$support_lib_version"
+    implementation "com.android.support:recyclerview-v7:$support_lib_version"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation "com.android.support:support-annotations:$support_lib_version"
 
@@ -63,6 +65,9 @@ dependencies {
 
     // Android permissions for dummies
     implementation 'com.karumi:dexter:4.1.0'
+
+    // Google
+    implementation "com.google.android.gms:play-services-location:11.2.2"
 
     // Testing
     testImplementation 'junit:junit:4.12'

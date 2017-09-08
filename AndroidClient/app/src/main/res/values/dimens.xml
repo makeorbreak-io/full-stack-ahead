@@ -39,6 +39,8 @@
     <dimen name="text_button">14sp</dimen>
     <dimen name="text_caption">12sp</dimen>
 
+    <!-- LandingFragment -->
     <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="card_view_elevation">2dp</dimen>
 
 </resources>

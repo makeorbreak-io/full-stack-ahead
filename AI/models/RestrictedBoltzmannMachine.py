@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt # to remove
+import pandas as pd
 
 class RestrictedBoltzmannMachine():
     """
@@ -22,6 +23,7 @@ class RestrictedBoltzmannMachine():
     previousHiddenBiases = None
     previousVisibleBiases = None
     training_list = None
+    position_userId = None
 
     def __init__(self, hidden_layers, visible_layers):
         self.totalVisibleLayers = visible_layers
@@ -33,14 +35,19 @@ class RestrictedBoltzmannMachine():
 
     def __get_training_list__(self, totalUsersForTraining, users_group, places_df):
         training_list = []
+        self.position_userId = []
         for userID, userData in users_group:
             tmpPlacesRating_list = [0] * len(places_df)
+            lastUserId = None
             for num, place in userData.iterrows():
                 tmpPlacesRating_list[place['Place Index']] = place['Rating']/5.0
+            lastUserId = place['UserID']
+            self.position_userId.append(lastUserId)
             training_list.append(tmpPlacesRating_list)
             if totalUsersForTraining == 0:
                 break
             totalUsersForTraining = totalUsersForTraining - 1
+        print self.position_userId
         return training_list
 
     def __process_input__(self):
@@ -118,10 +125,24 @@ class RestrictedBoltzmannMachine():
         self.training_list = training_list
         self.__create_chart__(errors_list)
         return True
+
+    def __get_user_position_by_id__(self, userId):
+        print "xxxxxxxLISTAxxxxxxxx %s" % userId
+        print self.position_userId
+        try:
+            pos = self.position_userId.index(userId)
+            print "User position is %s" % pos
+            return pos
+        except ValueError:
+            print "deu erro"
+            return -1
         
-    def predict(self, places_df, userId=100, maxResults=20):
+    def predict(self, places_df, userId, maxResults = 20):
         """Input Reconstruction"""
-        userId = [self.training_list[userId]]
+        userPosition = self.__get_user_position_by_id__(userId)
+        if userPosition < 0:
+            return pd.DataFrame()
+        userId = [self.training_list[userPosition]]
         hh0 = tf.nn.sigmoid(tf.matmul(self.v0, self.weights) + self.hiddenBiases)
         vv1 = tf.nn.sigmoid(tf.matmul(hh0, tf.transpose(self.weights)) + self.visibleBiases)
         

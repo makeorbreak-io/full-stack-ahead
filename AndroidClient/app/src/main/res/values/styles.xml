@@ -1,11 +1,28 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="PrimaryTextView">
+        <item name="android:textSize">@dimen/text_body</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+
+    <style name="SecondaryTextView">
+        <item name="android:textSize">@dimen/text_body</item>
+        <item name="android:textColor">@color/colorTextSecondary</item>
+    </style>
+
+    <style name="MicrophoneButton" parent="ApiAi.Microphone">
+        <item name="mainColor">@drawable/microphone_colors</item>
+        <item name="centerColor">@color/colorAccent</item>
+        <item name="android:background">@color/colorAccent</item>
+        <item name="haloColor">@color/colorAccent</item>
     </style>
 
 </resources>

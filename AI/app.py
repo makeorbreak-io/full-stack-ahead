@@ -2,7 +2,7 @@
 from flask import Flask, request, jsonify
 from controllers.CollaborativeFilteringController import CollaborativeFilteringController
 
-from repositories.mariadb.RatingsRepositoryMariaDB import RatingRepositoryMariaDB #ToDo: deleteme
+from repositories.mariadb.RatingsRepositoryMariaDB import RatingsRepositoryMariaDB #ToDo: deleteme
 from repositories.mariadb.PlacesRepositoryMariaDB import PlacesRepositoryMariaDB #ToDo: deleteme
 
 app = Flask(__name__)

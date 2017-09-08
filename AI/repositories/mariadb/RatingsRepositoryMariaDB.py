@@ -8,7 +8,7 @@ PLACE_ID_STR = 'PlaceID'
 RATING_STR = 'Rating'
 TIMESTAMP_STR = 'Timestamp'
 
-class RatingRepositoryMariaDB(IRatingRepository):
+class RatingsRepositoryMariaDB(IRatingRepository):
 
     ratings_df = None
     host = None

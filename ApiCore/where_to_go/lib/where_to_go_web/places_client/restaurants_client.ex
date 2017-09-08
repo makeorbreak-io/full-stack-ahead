@@ -12,6 +12,8 @@ defmodule WhereToGoWeb.RestaurantsClient do
         access_token = get_access_token()
         restaurants = Enum.flat_map(get_cities_to_update(), &get_restaurants_by_city(access_token, &1))
         IEx.pry
+        File.write("../restaurants", Poison.encode!(restaurants), [:binary])
+        IEx.pry
         restaurants
     end
 
@@ -21,7 +23,7 @@ defmodule WhereToGoWeb.RestaurantsClient do
 
         response = HTTPoison.get!(request_url, headers)
 
-        Poison.decode!(response.body)
+        Poison.decode!(response.body)["businesses"]
     end    
 
     defp get_cities_to_update do

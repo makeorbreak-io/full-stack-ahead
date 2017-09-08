@@ -12,7 +12,7 @@ config :where_to_go,
 # Configures the endpoint
 config :where_to_go, WhereToGoWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "5ZlqfEq4TswU/f+A9jUgjP+M2bmPIstQdkjxeFq+/tdOQ98wBcLCzhBnQzkPreDz",
+  secret_key_base: "EraF5Zr4wDbb31iyIKVYZ8WpmkgVRRxQ4sVQNAxMJBwMS90+h2ihZiAoghGuyQXt",
   render_errors: [view: WhereToGoWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: WhereToGo.PubSub,
            adapter: Phoenix.PubSub.PG2]

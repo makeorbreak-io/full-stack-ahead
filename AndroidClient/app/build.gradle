@@ -66,6 +66,9 @@ dependencies {
     // Android permissions for dummies
     implementation 'com.karumi:dexter:4.1.0'
 
+    // Google
+    implementation "com.google.android.gms:play-services-location:11.2.2"
+
     // Testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

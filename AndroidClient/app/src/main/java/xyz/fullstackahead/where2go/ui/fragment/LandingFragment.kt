@@ -19,6 +19,8 @@ import android.view.View
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.multi.BaseMultiplePermissionsListener
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.BasePermissionListener
 import kotlinx.android.synthetic.main.fragment_landing.*
 import xyz.fullstackahead.where2go.R
@@ -26,6 +28,7 @@ import xyz.fullstackahead.where2go.Recommendation
 import xyz.fullstackahead.where2go.ui.adapter.RecommendationsAdapter
 import xyz.fullstackahead.where2go.ui.fragment.base.BaseFragment
 import xyz.fullstackahead.where2go.ui.viewmodel.LandingViewModel
+import xyz.fullstackahead.where2go.utils.getAddressFromLocation
 import java.util.*
 
 
@@ -46,6 +49,7 @@ class LandingFragment : BaseFragment() {
         setHasOptionsMenu(true)
 
         viewModel = ViewModelProviders.of(this).get(LandingViewModel::class.java)
+        viewModel.init(mainActivity)
         ttsEngine = TextToSpeech(activity, {
             if (it == TextToSpeech.SUCCESS) {
                 Log.d("TTS", "TTS engine initialized")
@@ -69,6 +73,8 @@ class LandingFragment : BaseFragment() {
         setupSearchButton()
         setupRecyclerView()
         viewModel.getRecommendations()
+
+        viewModel.getLocation()
     }
 
     private fun setupAppBarLayout() {
@@ -95,14 +101,7 @@ class LandingFragment : BaseFragment() {
 
 
     private fun setupPermissions() {
-        Dexter.withActivity(activity).withPermission(Manifest.permission.RECORD_AUDIO).withListener(object : BasePermissionListener() {
-            override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                super.onPermissionGranted(response)
-            }
-
-            override fun onPermissionDenied(response: PermissionDeniedResponse?) {
-                super.onPermissionDenied(response)
-            }
+        Dexter.withActivity(activity).withPermissions(Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).withListener(object : BaseMultiplePermissionsListener() {
 
         }).check()
     }
@@ -170,6 +169,8 @@ class LandingFragment : BaseFragment() {
 
     private fun performSearch() {
         // TODO
+        val location = viewModel.getLocation()
+        Log.d(TAG, getAddressFromLocation(location?.latitude!!, location.longitude, mainActivity).toString())
         viewModel.getRecommendations()
     }
 

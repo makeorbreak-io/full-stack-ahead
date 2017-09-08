@@ -12,6 +12,19 @@ services:
     links:
       - maria:maria
     restart: always
+  ai:
+    container_name: mob_ai
+    build:
+      context: .
+      dockerfile: Dockerfile.ai
+    ports:
+      - "8880:8888"
+      - "4141:5000"
+    volumes:
+      - ./AI:/app
+    links:
+      - maria:maria
+    restart: always
   maria:
     container_name: mob_maria
     image: mariadb:10.3

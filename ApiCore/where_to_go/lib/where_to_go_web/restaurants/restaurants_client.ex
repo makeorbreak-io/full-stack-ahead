@@ -36,11 +36,12 @@ defmodule WhereToGoWeb.RestaurantsClient do
     end
     
     defp build_restaurant_from_business(business) do
-        rest = Map.take(business, ["name", "url", "image_url", "price", "rating"])
+        res = Map.take(business, ["name", "url", "image_url", "price", "rating"])
 
         categories = Enum.map(business["categories"], fn(cat) -> cat["title"] end)
 
-        Map.put_new(rest, "categories", categories)
+        rest_with_cats = Map.put_new(res, "categories", categories)
+        Map.put_new(rest_with_cats, "city", business["location"]["city"])
     end
 
     defp get_cities_to_update do

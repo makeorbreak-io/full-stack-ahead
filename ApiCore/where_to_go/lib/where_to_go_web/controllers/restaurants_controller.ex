@@ -17,6 +17,7 @@ defmodule WhereToGoWeb.RestaurantsController do
 
     defp poi_to_model(r) do
         poi = %PointOfInterest{
+            city: r["city"],
             name: r["name"],
             price: r["price"],
             rating_api: r["rating"],
@@ -25,12 +26,13 @@ defmodule WhereToGoWeb.RestaurantsController do
         }       
         
         result = Repo.insert!(poi)
-
-        categories = Enum.map(r["categories"], &tag_to_model(result.id, &1))        
+        IEx.pry
+        categories = Enum.map(r["categories"], &tag_to_model(result.id, &1))
         Enum.each(categories, fn x -> Repo.insert!(x) end)
     end
 
-    defp tag_to_model(id, t) do 
+    defp tag_to_model(id, t) do
+        IEx.pry
         %Tag{
             point_of_interest_id: id,
             name: t 

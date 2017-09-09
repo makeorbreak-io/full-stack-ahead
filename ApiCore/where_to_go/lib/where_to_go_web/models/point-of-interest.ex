@@ -2,6 +2,7 @@ defmodule PointOfInterest do
   use WhereToGoWeb, :model
 
   schema "point_of_interest" do
+    field :city, :string
     field :name, :string
     field :price, :string
     field :rating_api, :float
@@ -14,7 +15,7 @@ defmodule PointOfInterest do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :price, :rating_api, :url, :image_url])
-    |> validate_required([:name, :price, :rating_api, :url])
+    |> cast(params, [:name, :price, :rating_api, :url, :image_url, :city])
+    |> validate_required([:name, :price, :rating_api, :url, :city])
   end
 end

@@ -1,7 +1,5 @@
 package xyz.fullstackahead.where2go.ui.fragment
 
-import android.app.AlertDialog
-import android.app.Dialog
 import android.arch.lifecycle.LifecycleRegistry
 import android.arch.lifecycle.LifecycleRegistryOwner
 import android.os.Bundle
@@ -13,13 +11,16 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import kotlinx.android.synthetic.main.fragment_login.*
+import retrofit2.Callback
 import xyz.fullstackahead.where2go.R
+import xyz.fullstackahead.where2go.Where2GoApp
+import xyz.fullstackahead.where2go.network.ApiClient
+import xyz.fullstackahead.where2go.network.RequestManager
 import xyz.fullstackahead.where2go.persistence.SharedPreferences
 import xyz.fullstackahead.where2go.pojo.User
 import java.util.regex.Pattern
+import javax.inject.Inject
 
 class LoginDialogFragment : DialogFragment(), LifecycleRegistryOwner {
 
@@ -29,10 +30,14 @@ class LoginDialogFragment : DialogFragment(), LifecycleRegistryOwner {
 
     private lateinit var auth: FirebaseAuth
 
+    @Inject
+    lateinit var apiClient: ApiClient
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, android.R.style.Theme_Material_Light_Dialog)
         auth = FirebaseAuth.getInstance()
+        Where2GoApp.instance.component.inject(this)
     }
 
 
@@ -61,7 +66,9 @@ class LoginDialogFragment : DialogFragment(), LifecycleRegistryOwner {
                     user.getIdToken(true).addOnCompleteListener {
                         if (it.isSuccessful) {
                             // Store user
-                            SharedPreferences.storeCurrentUser(User(username = user.displayName!!, email = user.email!!, token = it.result!!.token!!))
+                            val newUser = User(email = user.email!!, token = it.result!!.token!!)
+                            SharedPreferences.storeCurrentUser(newUser)
+                            RequestManager.enqueue(apiClient.login(newUser))
                             dismiss()
                         } else if (it.exception != null) {
                             Toast.makeText(activity, it.exception!!.message, Toast.LENGTH_SHORT).show()
@@ -89,8 +96,9 @@ class LoginDialogFragment : DialogFragment(), LifecycleRegistryOwner {
                     user.getIdToken(true).addOnCompleteListener {
                         if (it.isSuccessful) {
                             // Store user
-                            SharedPreferences.storeCurrentUser(User(username = user.displayName ?: user.email!!, email = user.email!!, token = it.result!!.token!!))
-                            dismiss()
+                            val newUser = User(email = user.email!!, token = it.result!!.token!!)
+                            SharedPreferences.storeCurrentUser(newUser)
+                            RequestManager.enqueue(apiClient.login(newUser))
                         } else if (it.exception != null) {
                             Toast.makeText(activity, it.exception!!.message, Toast.LENGTH_SHORT).show()
                             showProgress(false)

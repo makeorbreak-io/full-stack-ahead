@@ -1,0 +1,5 @@
+#!/bin/bash
+cd /root/full-stack-ahead
+git pull
+cp /root/.env /root/full-stack-ahead/.env
+docker-compose up -d --build

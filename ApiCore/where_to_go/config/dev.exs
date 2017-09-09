@@ -10,9 +10,9 @@ config :where_to_go, WhereToGoWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
-  check_origin: false,
-  watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
-                    cd: Path.expand("../assets", __DIR__)]]
+  check_origin: false
+  #watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
+   #                 cd: Path.expand("../assets", __DIR__)]]
 
 # ## SSL Support
 #
@@ -54,6 +54,6 @@ config :where_to_go, WhereToGo.Repo,
   username: "fsa",
   password: "xourixos",
   database: "where2go",
-  hostname: "localhost",
-  port: 3307,
+  hostname: "maria",
+  port: 3306,
   pool_size: 10

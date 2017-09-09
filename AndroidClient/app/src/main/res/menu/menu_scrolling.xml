@@ -6,9 +6,15 @@
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search_black_24dp"
-        android:orderInCategory="200"
+        android:orderInCategory="100"
         android:title="@string/action_search"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_login"
+        android:orderInCategory="200"
+        android:title="@string/action_login"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_test_location"

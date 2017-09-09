@@ -6,7 +6,7 @@ defmodule WhereToGoWeb.CategoriesController do
 
   def get_categories(conn, _params) do
       categories = Repo.all(from tag in Tag, distinct: true, select: tag.name)
-			json conn, categories_db
+			json conn, categories
   end
 
 end

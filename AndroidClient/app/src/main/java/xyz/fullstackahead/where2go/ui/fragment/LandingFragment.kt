@@ -73,6 +73,7 @@ class LandingFragment : BaseFragment() {
         setupSearchButton()
         setupRecyclerView()
         viewModel.getRecommendations()
+        viewModel.getCategories()
     }
 
     private fun setupAppBarLayout() {

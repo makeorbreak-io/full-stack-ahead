@@ -14,7 +14,10 @@ import com.google.android.gms.location.LocationServices
 import xyz.fullstackahead.where2go.R
 import xyz.fullstackahead.where2go.pojo.Recommendation
 import xyz.fullstackahead.where2go.Where2GoApp
+import xyz.fullstackahead.where2go.network.ApiClient
+import xyz.fullstackahead.where2go.network.RequestManager
 import java.util.*
+import javax.inject.Inject
 
 class LandingViewModel(application: Application?) : AndroidViewModel(application), AIDialog.AIDialogListener {
 
@@ -24,8 +27,16 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
         const val PARAM_CITY = "city"
     }
 
+    @Inject
+    lateinit var apiClient: ApiClient
+
+    init {
+        Where2GoApp.instance.component.inject(this)
+    }
+
     val apiResponse: MutableLiveData<String> = MutableLiveData()
     val recommendations: MutableLiveData<List<Recommendation>> = MutableLiveData()
+    val categories: MutableLiveData<List<String>> = MutableLiveData()
 
     private var googleApiClient: GoogleApiClient? = null
 
@@ -50,6 +61,15 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
                     predictedRating = rating)
         }
         recommendations.postValue(list)
+    }
+
+
+    fun getCategories() {
+        RequestManager.execute(apiClient.getCategories(), {
+            if (it.isSuccessful) {
+                categories.postValue(it.body())
+            }
+        })
     }
 
 

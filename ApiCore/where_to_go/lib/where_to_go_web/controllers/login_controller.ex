@@ -20,7 +20,7 @@ defmodule WhereToGoWeb.LoginController do
 
     conn
     |> put_status(status_code)
-    |> text("success")
+    |> text("")
   end
 
 end

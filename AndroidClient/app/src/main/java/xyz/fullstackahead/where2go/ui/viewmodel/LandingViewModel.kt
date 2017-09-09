@@ -41,11 +41,13 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
         // TODO network call
         val list = ArrayList<Recommendation>()
         (1..50).mapTo(list) {
+            val rating = Random().nextInt(6).toFloat()
             Recommendation(
-                    getApplication<Where2GoApp>().getString(R.string.placeholder_title, it),
-                    getApplication<Where2GoApp>().getString(R.string.placeholder_description),
-                    "",
-                    Random().nextInt(5))
+                    userRating = rating,
+                    price = "€",
+                    categories = listOf("Salads, Cookies"),
+                    name = getApplication<Where2GoApp>().getString(R.string.placeholder_title, it),
+                    predictedRating = rating)
         }
         recommendations.postValue(list)
     }

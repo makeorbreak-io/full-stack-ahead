@@ -27,6 +27,7 @@ defmodule WhereToGoWeb.Router do
     get "/categories", CategoriesController, :get_categories
     get "/restaurants", RestaurantsController, :update_restaurants
     post "/predict", RestaurantsController, :predict
+    post "/rating", RatingsController, :add_rating
   end
 
   # Other scopes may use custom stacks.

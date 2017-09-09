@@ -3,13 +3,13 @@ FROM elixir:1.5
 RUN mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez --force
 
 
-#RUN wget https://nodejs.org/dist/v6.11.3/node-v6.11.3-linux-x64.tar.xz
-#RUN tar -xf node-v6.11.3-linux-x64.tar.xz && rm node-v6.11.3-linux-x64.tar.xz
-#RUN cp -r node-v6.11.3-linux-x64/* /
+RUN wget https://nodejs.org/dist/v6.11.3/node-v6.11.3-linux-x64.tar.xz
+RUN tar -xf node-v6.11.3-linux-x64.tar.xz && rm node-v6.11.3-linux-x64.tar.xz
+RUN cp -r node-v6.11.3-linux-x64/* /
 
 WORKDIR /app/where_to_go/
 
 EXPOSE 4000
 
-CMD mix local.hex --force && mix deps.get && mix compile && mix phx.server
+CMD mix local.hex --force && mix local.rebar --force && mix deps.get && mix compile && mix phx.server
 #CMD ["sleep", "infinity"]

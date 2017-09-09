@@ -45,6 +45,7 @@ defmodule WhereToGoWeb.RestaurantsController do
         case user do
             nil -> 
                 conn |> put_status 404
+                |> text("login bitch")
             _ ->
                 body = {:form, [userId: user.id]}
                 headers = %{"Content-type" => "application/x-www-form-urlencoded"}

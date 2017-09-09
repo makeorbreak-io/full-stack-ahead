@@ -34,6 +34,7 @@ class RecommendationsAdapter(
 
     fun update(data: List<Recommendation>) {
         this.data = data
+        expandedPosition = -1
         notifyDataSetChanged()
     }
 

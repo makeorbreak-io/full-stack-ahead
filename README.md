@@ -2,7 +2,7 @@
 
 A recommendation engine that learns based on your interests and the interests of other users. Currently working with restaurants and other food-related businesses, based on data returned by the [Yelp public API](https://www.yelp.com/developers/documentation/v3).
 
-Where2.Go consists of a native Android app, which serves as the fronted for a core API and an AI service.
+Where2.Go consists of a native Android app, which serves as the frontend for a core API and an AI service.
 
 ## Android app
 * Native app built using [Kotlin](https://kotlinlang.org/)

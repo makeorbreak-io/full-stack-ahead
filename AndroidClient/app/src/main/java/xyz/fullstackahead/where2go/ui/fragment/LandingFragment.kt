@@ -1,14 +1,12 @@
 package xyz.fullstackahead.where2go.ui.fragment
 
-import ai.api.android.AIConfiguration
 import ai.api.ui.AIDialog
 import android.Manifest
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.support.annotation.DrawableRes
 import android.support.design.widget.AppBarLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -17,18 +15,17 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import com.karumi.dexter.Dexter
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.multi.BaseMultiplePermissionsListener
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import com.karumi.dexter.listener.single.BasePermissionListener
 import kotlinx.android.synthetic.main.fragment_landing.*
 import xyz.fullstackahead.where2go.R
-import xyz.fullstackahead.where2go.Recommendation
+import xyz.fullstackahead.where2go.persistence.SharedPreferences
+import xyz.fullstackahead.where2go.pojo.Recommendation
+import xyz.fullstackahead.where2go.pojo.User
 import xyz.fullstackahead.where2go.ui.adapter.RecommendationsAdapter
 import xyz.fullstackahead.where2go.ui.fragment.base.BaseFragment
 import xyz.fullstackahead.where2go.ui.viewmodel.LandingViewModel
 import xyz.fullstackahead.where2go.utils.getAddressFromLocation
+import xyz.fullstackahead.where2go.utils.loadImage
 import xyz.fullstackahead.where2go.utils.showDialog
 import xyz.fullstackahead.where2go.utils.tintMenuItem
 import java.util.*
@@ -64,6 +61,7 @@ class LandingFragment : BaseFragment() {
         // Setup liveData observers
         viewModel.apiResponse.observe(this, Observer { onAIResponse(it) })
         viewModel.recommendations.observe(this, Observer { onRecommendations(it) })
+        SharedPreferences.currentUser.observe(this, Observer { onUserChanged(it) })
     }
 
 
@@ -75,12 +73,12 @@ class LandingFragment : BaseFragment() {
         setupSearchButton()
         setupRecyclerView()
         viewModel.getRecommendations()
-
-        viewModel.getLocation()
     }
 
     private fun setupAppBarLayout() {
         mainActivity.setSupportActionBar(toolbar)
+        //collapsingToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(activity, R.color.colorAccent))
+        //collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT)
         appBarLayout?.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             var isShow = false
             var scrollRange = -1
@@ -90,15 +88,29 @@ class LandingFragment : BaseFragment() {
                     scrollRange = appBarLayout!!.totalScrollRange
                 }
                 if (scrollRange + verticalOffset == 0) {
+                    // Collapsed
                     isShow = true
                     showOption(R.id.action_search)
                 } else if (isShow) {
+                    // Expanded
                     isShow = false
                     hideOption(R.id.action_search)
+                    changeHeaderImage()
                 }
             }
 
         })
+    }
+
+
+    private fun changeHeaderImage() {
+        @DrawableRes val images = arrayOf(R.drawable.food_1, R.drawable.food_2, R.drawable.food_3, R.drawable.food_4, R.drawable.food_5)
+        @DrawableRes val pick = images[Random().nextInt(images.size - 1)]
+        val current : Int? = collapsingToolbarLayout.tag as? Int
+        if (current != pick) {
+            collapsingToolbarLayout.tag = pick
+            loadImage(headerImage, pick)
+        }
     }
 
 
@@ -153,6 +165,7 @@ class LandingFragment : BaseFragment() {
                 val address = getAddressFromLocation(latitude!!, longitude!!, activity)?.getAddressLine(0)
                 showDialog(getString(R.string.action_test_location), "$address \n($latitude | $longitude)", activity)
             }
+            R.id.action_login -> if (item.title == getString(R.string.action_login)) login() else logout()
         }
         return true
     }
@@ -182,6 +195,16 @@ class LandingFragment : BaseFragment() {
     }
 
 
+    private fun login() {
+        LoginDialogFragment().show(activity.supportFragmentManager, LoginDialogFragment.TAG)
+    }
+
+
+    private fun logout() {
+
+    }
+
+
     private fun onAIResponse(response: String?) {
         if (response == null) return
 
@@ -196,6 +219,16 @@ class LandingFragment : BaseFragment() {
         if (recommendations == null) return
 
         recommendationsAdapter?.update(recommendations)
+    }
+
+
+    private fun onUserChanged(user: User?) {
+        if (user == null) {
+            menu?.findItem(R.id.action_login)?.title = getString(R.string.action_login)
+
+        } else {
+            menu?.findItem(R.id.action_login)?.title = getString(R.string.action_logout, user.username)
+        }
     }
 
 }

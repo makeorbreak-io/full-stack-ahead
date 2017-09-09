@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import xyz.fullstackahead.where2go.R
-import xyz.fullstackahead.where2go.Recommendation
+import xyz.fullstackahead.where2go.pojo.Recommendation
 import xyz.fullstackahead.where2go.ui.viewholder.RecommendationViewHolder
 
 class RecommendationsAdapter : RecyclerView.Adapter<RecommendationViewHolder>() {

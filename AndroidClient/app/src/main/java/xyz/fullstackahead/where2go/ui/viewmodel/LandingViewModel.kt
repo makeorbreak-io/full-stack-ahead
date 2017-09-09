@@ -2,7 +2,6 @@ package xyz.fullstackahead.where2go.ui.viewmodel
 
 import ai.api.model.AIError
 import ai.api.model.AIResponse
-import ai.api.ui.AIButton
 import ai.api.ui.AIDialog
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
@@ -11,11 +10,9 @@ import android.content.Context
 import android.location.Location
 import android.util.Log
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationSettingsRequest
 import xyz.fullstackahead.where2go.R
-import xyz.fullstackahead.where2go.Recommendation
+import xyz.fullstackahead.where2go.pojo.Recommendation
 import xyz.fullstackahead.where2go.Where2GoApp
 import java.util.*
 

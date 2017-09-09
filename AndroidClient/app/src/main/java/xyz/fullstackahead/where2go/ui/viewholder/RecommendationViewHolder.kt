@@ -13,9 +13,14 @@ import xyz.fullstackahead.where2go.Where2GoApp
 
 class RecommendationViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
+    val cardView = itemView?.cardView
+    val price = itemView?.price
     val placeImage = itemView?.placeImage
     val placeTitle = itemView?.placeTitle
-    val placeDescription = itemView?.placeDescription
+    val placeCategories = itemView?.placeCategories
+    val expandedHolder = itemView?.expandWrapper
+    val ratingPicker = itemView?.ratingPicker
+    val confirmRateBtn = itemView?.btnConfirmRate
     private val rateMeBtn = itemView?.btnRate
     private val predictedRating = itemView?.predictedRating
     private val ratingContainer = itemView?.ratingContainer
@@ -53,6 +58,14 @@ class RecommendationViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemVi
     fun setPredictedRating(rating: Float) {
         val text = "%.1f".format(rating)
         predictedRating?.text = Where2GoApp.instance.getString(R.string.place_predicted_rating, text)
+    }
+
+
+    fun showNumberPicker(show: Boolean, currentRating: Int) {
+        if (show) cleanRatingStars() else setRating(currentRating)
+        ratingContainer?.visibility = if (show) GONE else VISIBLE
+        predictedRating?.visibility = if (show) GONE else VISIBLE
+        ratingPicker?.value = currentRating
     }
 
 }

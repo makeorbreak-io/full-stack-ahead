@@ -12,6 +12,7 @@
     <string name="action_logout">Logout %s</string>
     <string name="action_test_location">My Location</string>
     <string name="action_rate">Tap to rate</string>
+    <string name="action_rate_btn">Rate</string>
 
     <!-- Login -->
     <string name="invalid_email">Invalid email</string>
@@ -21,6 +22,8 @@
     <string name="email">Email</string>
 
     <string name="placeholder_description">Fancy, Expensive</string>
+    <string name="placeholder_long_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus, enim vitae dictum sodales, sem tortor lacinia ipsum, at vulputate nunc ligula sollicitudin eros</string>
     <string name="placeholder_title">Awesome place %d</string>
     <string name="place_predicted_rating">Prediction score: %s</string>
+    <string name="place_price">Price: %s</string>
 </resources>

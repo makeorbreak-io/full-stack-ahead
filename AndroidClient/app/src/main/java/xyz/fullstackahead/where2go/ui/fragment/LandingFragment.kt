@@ -138,7 +138,7 @@ class LandingFragment : BaseFragment() {
 
     private fun setupRecyclerView() {
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        recommendationsAdapter = RecommendationsAdapter()
+        recommendationsAdapter = RecommendationsAdapter(recyclerView)
         recyclerView.adapter = recommendationsAdapter
     }
 

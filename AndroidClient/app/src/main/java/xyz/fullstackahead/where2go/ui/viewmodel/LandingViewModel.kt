@@ -46,7 +46,7 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
                     userRating = rating,
                     price = "€",
                     categories = listOf("Salads, Cookies"),
-                    name = getApplication<Where2GoApp>().getString(R.string.placeholder_title, it),
+                    name = Where2GoApp.instance.getString(R.string.placeholder_title, it),
                     predictedRating = rating)
         }
         recommendations.postValue(list)

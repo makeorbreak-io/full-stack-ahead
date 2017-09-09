@@ -1,4 +1,4 @@
-package xyz.fullstackahead.where2go
+package xyz.fullstackahead.where2go.pojo
 
 data class Recommendation(
         val title: String = "",

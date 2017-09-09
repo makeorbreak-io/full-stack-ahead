@@ -1,5 +1,5 @@
 defmodule User do
-  use WhereToGoWeb.Web, :model
+  use WhereToGoWeb, :model
 
   schema "users" do
     field :username, :string

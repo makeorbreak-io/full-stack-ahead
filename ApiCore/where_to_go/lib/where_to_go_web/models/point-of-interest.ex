@@ -1,5 +1,5 @@
 defmodule PointOfInterest do
-  use WhereToGoWeb.Web, :model
+  use WhereToGoWeb, :model
 
   schema "points_of_interest" do
     field :name, :string

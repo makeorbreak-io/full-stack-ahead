@@ -1,5 +1,5 @@
 defmodule PoiTag do
-  use WhereToGoWeb.Web, :model
+  use WhereToGoWeb, :model
 
   schema "poi_tags" do
     belongs_to :points_of_interest, PointOfInterest, foreign_key: :point_of_interest_id

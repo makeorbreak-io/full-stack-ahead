@@ -1,5 +1,5 @@
 defmodule Rating do
-  use WhereToGoWeb.Web, :model
+  use WhereToGoWeb, :model
 
   schema "ratings" do
     field :rating, :integer

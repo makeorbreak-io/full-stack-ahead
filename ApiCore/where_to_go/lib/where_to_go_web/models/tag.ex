@@ -1,5 +1,5 @@
 defmodule Tag do
-  use WhereToGoWeb.Web, :model
+  use WhereToGoWeb, :model
 
   schema "tags" do
     field :name, :string

@@ -127,17 +127,15 @@ class RestrictedBoltzmannMachine():
         return True
 
     def __get_user_position_by_id__(self, userId):
-        print "xxxxxxxLISTAxxxxxxxx %s" % userId
-        print self.position_userId
         try:
             pos = self.position_userId.index(userId)
             print "User position is %s" % pos
             return pos
         except ValueError:
-            print "deu erro"
+            print "Error get user position"
             return -1
         
-    def predict(self, places_df, userId, maxResults = 20):
+    def predict(self, places_df, userId, maxResults = 50):
         """Input Reconstruction"""
         userPosition = self.__get_user_position_by_id__(userId)
         if userPosition < 0:

@@ -5,7 +5,6 @@ from repositories.IPlacesRepository import IPlacesRepository
 
 PLACE_ID_STR = 'PlaceID'
 TITLE_STR = 'Title'
-CATEGORIES_STR = 'Categories'
 PLACE_INDEX_STR = 'Place Index'
 
 
@@ -19,7 +18,7 @@ class PlacesRepositoryMariaDB(IPlacesRepository):
     db = None
     conn = None
 
-    def __init__(self, host, port, user, password, db): #'maria', 3307, 'fsa', 'xourixo', 'mob'
+    def __init__(self, host, port, user, password, db):
         self.host = host
         self.port = port
         self.user = user
@@ -34,8 +33,8 @@ class PlacesRepositoryMariaDB(IPlacesRepository):
 
     def get_dataframe_places(self):
         self.__connect__()
-        self.places_df = pd.read_sql('select place_id, title, categories from places;', con=self.conn)
-        self.places_df.columns = [PLACE_ID_STR, TITLE_STR, CATEGORIES_STR]
+        self.places_df = pd.read_sql('select id, name from point_of_interest;', con=self.conn)
+        self.places_df.columns = [PLACE_ID_STR, TITLE_STR]
         self.places_df[PLACE_INDEX_STR] = self.places_df.index
         print self.places_df.head()
         self.__disconnect__()

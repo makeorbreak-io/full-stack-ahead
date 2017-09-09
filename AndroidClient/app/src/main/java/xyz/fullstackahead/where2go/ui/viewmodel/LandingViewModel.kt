@@ -20,6 +20,8 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
 
     companion object {
         const val TAG = "LandingViewModel"
+        const val ACTION_FIND_PLACES = "find-places"
+        const val PARAM_CITY = "city"
     }
 
     val apiResponse: MutableLiveData<String> = MutableLiveData()
@@ -67,6 +69,13 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
     override fun onResult(result: AIResponse?) {
         Log.d(TAG, "API.AI - onResult")
         result?.result?.fulfillment?.speech?.let { apiResponse.postValue(it) }
+
+        when (result?.result?.action) {
+            ACTION_FIND_PLACES -> {
+                val city = result.result?.parameters?.get(PARAM_CITY)?.asString
+                // TODO: getRecommendations(city)
+            }
+        }
     }
 
     override fun onError(error: AIError?) {

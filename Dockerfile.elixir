@@ -11,5 +11,5 @@ WORKDIR /app/where_to_go/
 
 EXPOSE 4000
 
-CMD mix local.hex --force && mix deps.get && mix compile && mix phx.server
+CMD mix local.hex --force && mix local.rebar --force && mix deps.get && mix compile && mix phx.server
 #CMD ["sleep", "infinity"]

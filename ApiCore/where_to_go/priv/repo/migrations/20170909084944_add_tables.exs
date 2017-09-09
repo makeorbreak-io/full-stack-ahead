@@ -6,7 +6,7 @@ defmodule WhereToGo.Repo.Migrations.AddTables do
     create table(:users) do
       add :username, :string
       add :email, :string
-      add :token, :string
+      add :token, :text
       add :provider, :string
       timestamps()
     end

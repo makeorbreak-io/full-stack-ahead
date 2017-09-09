@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Where2.go</string>
 
+    <!-- base url -->
+    <string name="api_base_url">http://95.85.13.177</string>
     <string name="api_ai_access_token">741803b54bf5422292a7c2d875dc4716</string>
 
     <!-- Menu -->

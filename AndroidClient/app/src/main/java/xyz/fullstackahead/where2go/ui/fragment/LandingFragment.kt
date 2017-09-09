@@ -47,7 +47,7 @@ class LandingFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        viewModel = ViewModelProviders.of(this).get(LandingViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity).get(LandingViewModel::class.java)
         viewModel.init(mainActivity)
         ttsEngine = TextToSpeech(activity, {
             if (it == TextToSpeech.SUCCESS) {
@@ -77,8 +77,7 @@ class LandingFragment : BaseFragment() {
 
     private fun setupAppBarLayout() {
         mainActivity.setSupportActionBar(toolbar)
-        //collapsingToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(activity, R.color.colorAccent))
-        //collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT)
+        collapsingToolbarLayout.title = " "
         appBarLayout?.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             var isShow = false
             var scrollRange = -1
@@ -90,10 +89,12 @@ class LandingFragment : BaseFragment() {
                 if (scrollRange + verticalOffset == 0) {
                     // Collapsed
                     isShow = true
+                    collapsingToolbarLayout.title = getString(R.string.app_name)
                     showOption(R.id.action_search)
                 } else if (isShow) {
                     // Expanded
                     isShow = false
+                    collapsingToolbarLayout.title = " "
                     hideOption(R.id.action_search)
                     changeHeaderImage()
                 }
@@ -201,17 +202,14 @@ class LandingFragment : BaseFragment() {
 
 
     private fun logout() {
-
+        SharedPreferences.storeCurrentUser(null)
     }
 
 
     private fun onAIResponse(response: String?) {
         if (response == null) return
 
-        // TODO do we need this?
         ttsEngine.speak(response, TextToSpeech.QUEUE_FLUSH, null, null)
-
-        performSearch()
     }
 
 
@@ -227,8 +225,15 @@ class LandingFragment : BaseFragment() {
             menu?.findItem(R.id.action_login)?.title = getString(R.string.action_login)
 
         } else {
-            menu?.findItem(R.id.action_login)?.title = getString(R.string.action_logout, user.username)
+            menu?.findItem(R.id.action_login)?.title = getString(R.string.action_logout, user.email)
         }
+    }
+
+
+    override fun onDestroy() {
+        ttsEngine.stop()
+        ttsEngine.shutdown()
+        super.onDestroy()
     }
 
 }

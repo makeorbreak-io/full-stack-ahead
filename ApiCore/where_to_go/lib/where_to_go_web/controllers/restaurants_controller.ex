@@ -17,7 +17,6 @@ defmodule WhereToGoWeb.RestaurantsController do
 
     defp poi_to_model(r) do
         poi = %PointOfInterest{
-            name_id: r["id"],
             city: r["city"],
             name: r["name"],
             price: r["price"],
@@ -45,7 +44,7 @@ defmodule WhereToGoWeb.RestaurantsController do
         case user do
             nil -> 
                 conn |> put_status 404
-                |> text("login bitch")
+                |> text("login dude")
             _ ->
                 body = {:form, [userId: user.id]}
                 headers = %{"Content-type" => "application/x-www-form-urlencoded"}

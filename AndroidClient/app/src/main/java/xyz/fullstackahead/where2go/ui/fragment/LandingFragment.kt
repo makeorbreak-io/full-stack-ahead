@@ -29,6 +29,8 @@ import xyz.fullstackahead.where2go.ui.adapter.RecommendationsAdapter
 import xyz.fullstackahead.where2go.ui.fragment.base.BaseFragment
 import xyz.fullstackahead.where2go.ui.viewmodel.LandingViewModel
 import xyz.fullstackahead.where2go.utils.getAddressFromLocation
+import xyz.fullstackahead.where2go.utils.showDialog
+import xyz.fullstackahead.where2go.utils.tintMenuItem
 import java.util.*
 
 
@@ -133,10 +135,8 @@ class LandingFragment : BaseFragment() {
         mainActivity.menuInflater.inflate(R.menu.menu_scrolling, menu)
 
         // Fix search menu icon tint
-        val item = menu?.findItem(R.id.action_search)
-        val icon = menu?.findItem(R.id.action_search)?.icon
-        icon?.mutate()?.setColorFilter(Color.rgb(255, 255, 255), PorterDuff.Mode.SRC_IN)
-        item?.icon = icon
+        tintMenuItem(menu?.findItem(R.id.action_search))
+        tintMenuItem(menu?.findItem(R.id.action_test_location))
 
         hideOption(R.id.action_search)
     }
@@ -146,6 +146,13 @@ class LandingFragment : BaseFragment() {
         when (item?.itemId) {
             R.id.action_search -> performSearch()
             R.id.action_settings -> Log.d(TAG, "actionSettings")
+            R.id.action_test_location -> {
+                val location = viewModel.getLocation()
+                val latitude = location?.latitude
+                val longitude = location?.longitude
+                val address = getAddressFromLocation(latitude!!, longitude!!, activity)?.getAddressLine(0)
+                showDialog(getString(R.string.action_test_location), "$address \n($latitude | $longitude)", activity)
+            }
         }
         return true
     }

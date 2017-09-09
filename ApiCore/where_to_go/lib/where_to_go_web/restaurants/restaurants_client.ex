@@ -3,22 +3,38 @@ defmodule WhereToGoWeb.RestaurantsClient do
 
     def get_restaurants do
         headers = get_authenticated_request_headers()
-        restaurants = Enum.flat_map(get_cities_to_update(), &get_restaurants_by_city(headers, &1))
 
-        File.write("../restaurants", Poison.encode!(restaurants), [:binary])
-        IEx.pry
-        restaurants
+        bananas = get_cities_to_update()
+        |> Enum.flat_map &get_restaurants_by_city(headers, &1)
+        |> Enum.uniq_by  fn (c) -> c["name"] end
+        
+        IEx.pry 
     end
 
     defp get_restaurants_by_city(headers, city) do
-        #request and increment offset to get all the results (returned in groups of 50)
-        offset = 0
-        request_url = "https://api.yelp.com/v3/businesses/search?limit=50&offset=#{offset}&categories=restaurants&location=#{city}"
+        response = request_businesses(headers, city)
+        
+        total = response["total"]
+        businesses = Enum.map(response["businesses"], &build_restaurant_from_business/1)
 
-        response = HTTPoison.get!(request_url, headers)
+        businesses ++ get_restaurants_by_city_recur(headers, city, total, length(businesses))
+    end
 
-        businesses = Poison.decode!(response.body)["businesses"]
-        Enum.map(businesses, &build_restaurant_from_business/1)
+    defp get_restaurants_by_city_recur(headers, city, total, offset \\ 0) do
+        if  offset >= total do 
+            []
+        else
+            response = request_businesses(headers, city, offset)
+
+            businesses = Enum.map(response["businesses"], &build_restaurant_from_business/1)
+
+            businesses ++ get_restaurants_by_city_recur(headers, city, total, offset + length(businesses))
+        end
+    end
+
+    defp request_businesses(headers, city, offset \\ 0) do
+        request_url = "https://api.yelp.com/v3/businesses/search?limit=50&categories=restaurants&location=#{city}&offset=#{offset}"
+        Poison.decode!(HTTPoison.get!(request_url, headers).body)
     end
     
     defp build_restaurant_from_business(business) do

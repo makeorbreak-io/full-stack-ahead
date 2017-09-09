@@ -8,4 +8,5 @@
 
     <string name="placeholder_description">Place description omg so awesome. Much food, such hungry wow. Look at this food man. Just look at it.</string>
     <string name="placeholder_title">Awesome place %d</string>
+    <string name="action_test_location">My Location</string>
 </resources>

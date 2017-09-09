@@ -3,19 +3,19 @@ defmodule WhereToGo.Repo.Migrations.AddDummyData do
 
   def change do
     # USERS
-    #execute "insert into users (username, email, token, inserted_at, updated_at) values (, now(), now())"
-    execute "insert into users (username, email, token, inserted_at, updated_at) values ('user1', 'user1@gmail.com', 'user1token', now(), now())"
-    execute "insert into users (username, email, token, inserted_at, updated_at) values ('user2', 'user2@gmail.com', 'user1tokne', now(), now())"
-    execute "insert into users (username, email, token, inserted_at, updated_at) values ('user3', 'user3@gmail.com', 'user1token', now(), now())"
-    execute "insert into users (username, email, token, inserted_at, updated_at) values ('user4', 'user4@gmail.com', 'user1token', now(), now())"
-    execute "insert into users (username, email, token, inserted_at, updated_at) values ('user5', 'user5@gmail.com', 'user1token', now(), now())"
-    execute "insert into users (username, email, token, inserted_at, updated_at) values ('user6', 'user6@gmail.com', 'user1token', now(), now())"
-    execute "insert into users (username, email, token, inserted_at, updated_at) values ('user7', 'user7@gmail.com', 'user1token', now(), now())"
-    execute "insert into users (username, email, token, inserted_at, updated_at) values ('user8', 'user8@gmail.com', 'user1token', now(), now())"
-    execute "insert into users (username, email, token, inserted_at, updated_at) values ('user9', 'user9@gmail.com', 'user1token', now(), now())"
-    execute "insert into users (username, email, token, inserted_at, updated_at) values ('user10', 'user10@gmail.com', 'user1token', now(), now())"
-    execute "insert into users (username, email, token, inserted_at, updated_at) values ('user11', 'user11@gmail.com', 'user1token', now(), now())"
-    execute "insert into users (username, email, token, inserted_at, updated_at) values ('user12', 'user12@gmail.com', 'user1token', now(), now())"
+    #execute "insert into users (id, username, email, token, inserted_at, updated_at) values (, now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (1, 'user1', 'user1@gmail.com', 'user1token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (2, 'user2', 'user2@gmail.com', 'user1tokne', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (3, 'user3', 'user3@gmail.com', 'user1token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (4, 'user4', 'user4@gmail.com', 'user1token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (5, 'user5', 'user5@gmail.com', 'user1token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (6, 'user6', 'user6@gmail.com', 'user1token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (7, 'user7', 'user7@gmail.com', 'user1token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (8, 'user8', 'user8@gmail.com', 'user1token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (9, 'user9', 'user9@gmail.com', 'user1token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (10, 'user10', 'user10@gmail.com', 'user1token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (11, 'user11', 'user11@gmail.com', 'user1token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (12, 'user12', 'user12@gmail.com', 'user1token', now(), now())"
 
     # RATING
     #execute "insert into ratings (rating, user_id, point_of_interest_id, inserted_at, updated_at) values (, now(), now())"

@@ -11,6 +11,7 @@ services:
       - ./ApiCore:/app
     links:
       - maria:maria
+      - ai:ai
     restart: always
   ai:
     container_name: mob_ai

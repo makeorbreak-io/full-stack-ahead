@@ -36,4 +36,16 @@ defmodule WhereToGoWeb.RestaurantsController do
             name: t 
         }
     end
+
+    def predict(conn, _params) do                                        
+        request_url = "http://ai:5000/predict"
+        userid = conn.body_params["userId"]
+
+        response = HTTPoison.post!(request_url, {:form, [userId: userid]}, %{"Content-type" => "application/x-www-form-urlencoded"}) #URI.encode_query(%{userId: userid}), headers)
+        IEx.pry
+        IO.inspect(response.body, label: "CONN: ")
+        
+        json conn, Poison.decode!(response.body)
+    end
+
   end

@@ -4,21 +4,26 @@ defmodule WhereToGo.Repo.Migrations.AddDummyData do
   def change do
     # USERS
     #execute "insert into users (id, username, email, token, inserted_at, updated_at) values (, now(), now())"
-    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (1, 'bruno@mail.com', 'bruno@mail.com', 'user1token', now(), now())"
-    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (2, 'goncalo@mail.com', 'goncalo@mail.com', 'user1tokne', now(), now())"
-    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (3, 'tiago@gmail.com', 'tiago@gmail.com', 'user1token', now(), now())"
-    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (4, 'ricardo@gmail.com', 'ricardo@gmail.com', 'user1token', now(), now())"
-    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (5, 'user5', 'user5@gmail.com', 'ntoken', now(), now())"
-    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (6, 'user6', 'user6@gmail.com', 'ntoken', now(), now())"
-    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (7, 'user7', 'user7@gmail.com', 'ntoken', now(), now())"
-    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (8, 'user8', 'user8@gmail.com', 'ntoken', now(), now())"
-    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (9, 'user9', 'user9@gmail.com', 'ntoken', now(), now())"
-    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (10, 'user10', 'user10@gmail.com', 'ntoken', now(), now())"
-    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (11, 'user11', 'user11@gmail.com', 'ntoken', now(), now())"
-    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (12, 'user12', 'user12@gmail.com', 'ntoken', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (1, 'Bruno', 'bruno@mail.com', 'user1token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (2, 'Goncalo', 'goncalo@mail.com', 'user2tokne', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (3, 'Tiago', 'tiago@mail.com', 'user3token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (4, 'Ricardo', 'ricardo@mail.com', 'user4token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (5, 'user5', 'user5@gmail.com', 'user5token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (6, 'user6', 'user6@gmail.com', 'user6token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (7, 'user7', 'user7@gmail.com', 'user7token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (8, 'user8', 'user8@gmail.com', 'user8token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (9, 'user9', 'user9@gmail.com', 'user9token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (10, 'user10', 'user10@gmail.com', 'user10token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (11, 'user11', 'user11@gmail.com', 'user11token', now(), now())"
+    execute "insert into users (id, username, email, token, inserted_at, updated_at) values (12, 'user12', 'user12@gmail.com', 'user12token', now(), now())"
 
     # RATING
     #execute "insert into ratings (rating, user_id, point_of_interest_id, inserted_at, updated_at) values (, now(), now())"
+
+    ## Tiago
+    execute "insert into ratings (rating, user_id, point_of_interest_id, inserted_at, updated_at) values (3, 3, 277, now(), now())"
+    execute "insert into ratings (rating, user_id, point_of_interest_id, inserted_at, updated_at) values (4, 3, 192, now(), now())"
+    execute "insert into ratings (rating, user_id, point_of_interest_id, inserted_at, updated_at) values (3, 3, 356, now(), now())"
 
     ## USER5
     execute "insert into ratings (rating, user_id, point_of_interest_id, inserted_at, updated_at) values (3, 5, 277, now(), now())"

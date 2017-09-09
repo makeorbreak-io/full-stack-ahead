@@ -26,7 +26,7 @@ defmodule WhereToGoWeb.Router do
     get "/", PageController, :index
     get "/categories", CategoriesController, :get_categories
     get "/restaurants", RestaurantsController, :update_restaurants
-    post "/predict", RestaurantsController, :predict
+    get "/predict", RestaurantsController, :predict
     post "/rating", RatingsController, :add_rating
   end
 

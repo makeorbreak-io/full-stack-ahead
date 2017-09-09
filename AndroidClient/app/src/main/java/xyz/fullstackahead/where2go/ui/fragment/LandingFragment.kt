@@ -14,6 +14,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.multi.BaseMultiplePermissionsListener
 import kotlinx.android.synthetic.main.fragment_landing.*
@@ -48,6 +50,7 @@ class LandingFragment : BaseFragment() {
         setHasOptionsMenu(true)
 
         viewModel = ViewModelProviders.of(activity).get(LandingViewModel::class.java)
+        viewModel.loadingCallback = this::showProgress
         viewModel.init(mainActivity)
         ttsEngine = TextToSpeech(activity, {
             if (it == TextToSpeech.SUCCESS) {
@@ -117,9 +120,14 @@ class LandingFragment : BaseFragment() {
 
 
     private fun setupPermissions() {
-        Dexter.withActivity(activity).withPermissions(Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).withListener(object : BaseMultiplePermissionsListener() {
-
-        }).check()
+        Dexter
+                .withActivity(activity)
+                .withPermissions(
+                        Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(object : BaseMultiplePermissionsListener() {})
+                .check()
     }
 
 
@@ -131,7 +139,7 @@ class LandingFragment : BaseFragment() {
         }
 
         searchButton.setOnLongClickListener {
-            // TODO text-based search
+            performSearch()
             true
         }
     }
@@ -190,10 +198,7 @@ class LandingFragment : BaseFragment() {
 
 
     private fun performSearch() {
-        // TODO
-        val location = viewModel.getLocation()
-        Log.d(TAG, getAddressFromLocation(location?.latitude!!, location.longitude, mainActivity).toString())
-        viewModel.getRecommendations()
+        SearchDialogFragment().show(activity.supportFragmentManager, SearchDialogFragment.TAG)
     }
 
 
@@ -215,9 +220,10 @@ class LandingFragment : BaseFragment() {
 
 
     private fun onRecommendations(recommendations: List<Recommendation>?) {
-        if (recommendations == null) return
-
-        recommendationsAdapter?.update(recommendations)
+        showProgress(false)
+        if (recommendations != null) {
+            recommendationsAdapter?.update(recommendations)
+        }
     }
 
 
@@ -227,6 +233,17 @@ class LandingFragment : BaseFragment() {
 
         } else {
             menu?.findItem(R.id.action_login)?.title = getString(R.string.action_logout, user.email)
+        }
+    }
+
+
+    fun showProgress(inProgress: Boolean) {
+        if (inProgress) {
+            progressBar.visibility = VISIBLE
+            recyclerView.visibility = GONE
+        } else {
+            progressBar.visibility = GONE
+            recyclerView.visibility = VISIBLE
         }
     }
 

@@ -5,6 +5,7 @@ import xyz.fullstackahead.where2go.ui.activity.MainActivity
 import xyz.fullstackahead.where2go.Where2GoApp
 import xyz.fullstackahead.where2go.ui.adapter.RecommendationsAdapter
 import xyz.fullstackahead.where2go.ui.fragment.LoginDialogFragment
+import xyz.fullstackahead.where2go.ui.fragment.SearchDialogFragment
 import xyz.fullstackahead.where2go.ui.viewmodel.LandingViewModel
 import javax.inject.Singleton
 
@@ -18,4 +19,5 @@ interface MainComponent {
     fun inject(loginFragment: LoginDialogFragment)
     fun inject(viewModel: LandingViewModel)
     fun inject(adapter: RecommendationsAdapter)
+    fun inject(searchFragmentFragment: SearchDialogFragment)
 }

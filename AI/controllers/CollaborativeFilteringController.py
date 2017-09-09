@@ -28,7 +28,7 @@ class CollaborativeFilteringController():
         self.ratings_df = self.ratingsRepo.get_dataframe_ratings()
         print "Total of places registered %s" % len(self.places_df)
         self.places_ratings_df = self.places_df.merge(self.ratings_df, on='PlaceID') #merge by PlaceID
-        self.places_ratings_df = self.places_ratings_df.drop('Timestamp', axis=1).drop('Title', axis=1).drop('Categories', axis=1)#remove
+        self.places_ratings_df = self.places_ratings_df.drop('Timestamp', axis=1).drop('Title', axis=1)
         #ToDo: remove the above line, it's only good to check if the data is correct
         print self.places_ratings_df
         self.user_group_df = self.places_ratings_df.groupby('UserID')

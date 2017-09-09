@@ -39,7 +39,7 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
 
 
     fun getRecommendations() {
-        // TODO
+        // TODO network call
         val list = ArrayList<Recommendation>()
         (1..50).mapTo(list) {
             Recommendation(

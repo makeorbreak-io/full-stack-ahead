@@ -24,45 +24,55 @@
                 android:id="@+id/placeImage"
                 android:layout_width="@dimen/keyline_11"
                 android:layout_height="@dimen/keyline_11"
+                android:scaleType="centerCrop"
                 android:src="@drawable/place_placeholder"
                 tools:src="@drawable/place_placeholder" />
 
             <LinearLayout
                 android:id="@+id/ratingContainer"
-                android:layout_below="@id/placeImage"
-                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/placeImage"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:tint="@color/colorPrimary"
+                <TextView
+                    android:id="@+id/btnRate"
+                    tools:visibility="visible"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorAccent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_rate"/>
+
+                <!--<ImageView
                     android:layout_width="@dimen/keyline_2"
                     android:layout_height="@dimen/keyline_2"
-                    android:src="@drawable/ic_star_black_24dp"/>
+                    android:src="@drawable/ic_star_black_24dp"
+                    android:tint="@color/colorPrimary" />
 
                 <ImageView
-                    android:tint="@color/colorPrimary"
                     android:layout_width="@dimen/keyline_2"
                     android:layout_height="@dimen/keyline_2"
-                    android:src="@drawable/ic_star_black_24dp"/>
+                    android:src="@drawable/ic_star_black_24dp"
+                    android:tint="@color/colorPrimary" />
 
                 <ImageView
-                    android:tint="@color/colorPrimary"
                     android:layout_width="@dimen/keyline_2"
                     android:layout_height="@dimen/keyline_2"
-                    android:src="@drawable/ic_star_black_24dp"/>
+                    android:src="@drawable/ic_star_black_24dp"
+                    android:tint="@color/colorPrimary" />
 
                 <ImageView
-                    android:tint="@color/colorPrimary"
                     android:layout_width="@dimen/keyline_2"
                     android:layout_height="@dimen/keyline_2"
-                    android:src="@drawable/ic_star_black_24dp"/>
+                    android:src="@drawable/ic_star_black_24dp"
+                    android:tint="@color/colorPrimary" />
 
                 <ImageView
-                    android:tint="@color/colorPrimary"
                     android:layout_width="@dimen/keyline_2"
                     android:layout_height="@dimen/keyline_2"
-                    android:src="@drawable/ic_star_black_24dp"/>
+                    android:src="@drawable/ic_star_black_24dp"
+                    android:tint="@color/colorPrimary" />-->
 
             </LinearLayout>
 
@@ -91,6 +101,14 @@
                     tools:text="@string/placeholder_description" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/predictedRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignBottom="@id/ratingContainer"
+                tools:text="Prediction score: 4.5" />
 
         </RelativeLayout>
 

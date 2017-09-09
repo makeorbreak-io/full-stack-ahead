@@ -1,8 +1,15 @@
 package xyz.fullstackahead.where2go.pojo
 
+import com.google.gson.annotations.SerializedName
+
 data class Recommendation(
-        val title: String = "",
-        val description: String = "",
+        @SerializedName("rating")
+        val userRating: Float = 0F,
+        val price: String = "",
+        val name: String = "",
+        @SerializedName("image_url")
         val imageUrl: String = "",
-        val rating: Int = 0
+        val categories: List<String> = emptyList(),
+        @SerializedName("predicted_rating")
+        val predictedRating: Float = 0F
 )

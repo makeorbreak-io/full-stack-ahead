@@ -24,10 +24,11 @@ class RecommendationsAdapter : RecyclerView.Adapter<RecommendationViewHolder>() 
 
     override fun onBindViewHolder(holder: RecommendationViewHolder?, position: Int) {
         val recommendation = data[position]
-        holder?.placeTitle?.text = recommendation.title
-        holder?.placeDescription?.text = recommendation.description
+        holder?.placeTitle?.text = recommendation.name
+        holder?.placeDescription?.text = recommendation.categories.joinToString(separator = ", ")
         // TODO holder?.placeImage
-        holder?.setRating(recommendation.rating)
+        holder?.setRating(recommendation.userRating.toInt())
+        holder?.setPredictedRating(recommendation.predictedRating)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecommendationViewHolder {

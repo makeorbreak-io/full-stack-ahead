@@ -15,7 +15,9 @@ defmodule WhereToGoWeb.Router do
 
   scope "/", WhereToGoWeb do
     pipe_through :browser # Use the default browser stack
+    
     get "/", PageController, :index
+    post "/login", LoginController, :login
   end
 
   scope "/api/v1/", WhereToGoWeb do

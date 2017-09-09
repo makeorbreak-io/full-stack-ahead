@@ -24,6 +24,7 @@ defmodule WhereToGoWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/categories", CategoriesController, :get_categories
     get "/restaurants", RestaurantsController, :update_restaurants
     post "/predict", RestaurantsController, :predict
   end

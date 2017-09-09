@@ -18,7 +18,7 @@ class RatingsRepositoryMariaDB(IRatingRepository):
     db = None
     conn = None
 
-    def __init__(self, host, port, user, password, db): #'maria', 3307, 'fsa', 'xourixo', 'mob'
+    def __init__(self, host, port, user, password, db):
         self.host = host
         self.port = port
         self.user = user
@@ -33,7 +33,7 @@ class RatingsRepositoryMariaDB(IRatingRepository):
 
     def get_dataframe_ratings(self):
         self.__connect__()
-        self.ratings_df = pd.read_sql('select user_id, place_id, rating, timestamp from ratings;', con=self.conn)
+        self.ratings_df = pd.read_sql('select user_id, point_of_interest_id, rating, updated_at from ratings;', con=self.conn)
         self.ratings_df.columns = [USER_ID_STR, PLACE_ID_STR, RATING_STR, TIMESTAMP_STR]
         print self.ratings_df.head()
         self.__disconnect__()

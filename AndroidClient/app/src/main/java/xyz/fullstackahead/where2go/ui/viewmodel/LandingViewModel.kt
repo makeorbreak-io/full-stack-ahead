@@ -9,13 +9,16 @@ import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import android.location.Location
 import android.util.Log
+import android.widget.Toast
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationServices
+import retrofit2.Response
 import xyz.fullstackahead.where2go.R
 import xyz.fullstackahead.where2go.pojo.Recommendation
 import xyz.fullstackahead.where2go.Where2GoApp
 import xyz.fullstackahead.where2go.network.ApiClient
 import xyz.fullstackahead.where2go.network.RequestManager
+import xyz.fullstackahead.where2go.utils.getAddressFromLocation
 import java.util.*
 import javax.inject.Inject
 
@@ -25,6 +28,7 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
         const val TAG = "LandingViewModel"
         const val ACTION_FIND_PLACES = "find-places"
         const val PARAM_CITY = "city"
+        const val PARAM_CATEGORY = "category"
     }
 
     @Inject
@@ -39,6 +43,8 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
     val categories: MutableLiveData<List<String>> = MutableLiveData()
 
     private var googleApiClient: GoogleApiClient? = null
+
+    var loadingCallback: (isLoading: Boolean) -> Unit = {}
 
     fun init(context: Context) {
         if (googleApiClient == null) {
@@ -64,6 +70,11 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
     }
 
 
+    fun getRecommendations(city: String?, category: String?, callback: (response: Response<List<Recommendation>>) -> Unit) {
+        RequestManager.execute(apiClient.getRecommendation(city, category), callback)
+    }
+
+
     fun getCategories() {
         RequestManager.execute(apiClient.getCategories(), {
             if (it.isSuccessful) {
@@ -83,6 +94,14 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
     }
 
 
+    fun getCity(): String? {
+        return getLocation()?.let {
+            val address = getAddressFromLocation(it.latitude, it.longitude, Where2GoApp.instance)
+            return address?.adminArea
+        }
+    }
+
+
     // AIButtonListener Callbacks
     override fun onCancelled() {
         Log.d(TAG, "API.AI - onCancelled")
@@ -94,8 +113,24 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
 
         when (result?.result?.action) {
             ACTION_FIND_PLACES -> {
-                val city = result.result?.parameters?.get(PARAM_CITY)?.asString
-                // TODO: getRecommendations(city)
+                var city: String? = null
+                var category: String? = null
+                if (result.result!!.parameters!!.containsKey(PARAM_CITY)) {
+                    city = result.result.parameters[PARAM_CITY]?.asString
+                }
+                if (result.result!!.parameters!!.containsKey(PARAM_CATEGORY)) {
+                    category = result.result.parameters[PARAM_CATEGORY]?.asString
+                }
+                loadingCallback.invoke(true)
+                getRecommendations(city, category, {
+                    loadingCallback.invoke(false)
+                    if (it.isSuccessful) {
+                        recommendations.postValue(it.body())
+                    } else {
+                        Toast.makeText(Where2GoApp.instance, "Something went wrong, apologies", Toast.LENGTH_SHORT).show()
+                        Log.d(TAG, "Error response: " + it.toString())
+                    }
+                })
             }
         }
     }

@@ -13,6 +13,7 @@
     <string name="action_test_location">My Location</string>
     <string name="action_rate">Tap to rate</string>
     <string name="action_rate_btn">Rate</string>
+    <string name="action_recommend">Recommend</string>
 
     <!-- Login -->
     <string name="invalid_email">Invalid email</string>

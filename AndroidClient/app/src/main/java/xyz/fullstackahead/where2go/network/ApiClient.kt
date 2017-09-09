@@ -4,7 +4,9 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 import xyz.fullstackahead.where2go.pojo.RateRequest
+import xyz.fullstackahead.where2go.pojo.Recommendation
 import xyz.fullstackahead.where2go.pojo.User
 
 interface ApiClient {
@@ -17,5 +19,8 @@ interface ApiClient {
 
     @GET("/api/v1/categories")
     fun getCategories(): Call<List<String>>
+
+    @GET("api/v1/predict")
+    fun getRecommendation(@Query("city") city: String?, @Query("category") category: String?): Call<List<Recommendation>>
 
 }

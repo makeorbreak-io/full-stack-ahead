@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_login.*
-import retrofit2.Callback
 import xyz.fullstackahead.where2go.R
 import xyz.fullstackahead.where2go.Where2GoApp
 import xyz.fullstackahead.where2go.network.ApiClient

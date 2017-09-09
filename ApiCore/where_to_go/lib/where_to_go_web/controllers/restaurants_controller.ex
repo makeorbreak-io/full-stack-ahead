@@ -17,6 +17,7 @@ defmodule WhereToGoWeb.RestaurantsController do
 
     defp poi_to_model(r) do
         poi = %PointOfInterest{
+            name_id: r["id"]
             city: r["city"],
             name: r["name"],
             price: r["price"],

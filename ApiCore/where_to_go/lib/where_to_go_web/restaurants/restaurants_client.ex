@@ -36,7 +36,7 @@ defmodule WhereToGoWeb.RestaurantsClient do
     end
     
     defp build_restaurant_from_business(business) do
-        res = Map.take(business, ["name", "url", "image_url", "price", "rating"])
+        res = Map.take(business, ["name", "url", "image_url", "price", "rating", "id"])
 
         categories = Enum.map(business["categories"], fn(cat) -> cat["title"] end)
 

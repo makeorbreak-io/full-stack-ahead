@@ -2,6 +2,7 @@ defmodule PointOfInterest do
   use WhereToGoWeb, :model
 
   schema "point_of_interest" do
+    field :name_id, :string
     field :city, :string
     field :name, :string
     field :price, :string

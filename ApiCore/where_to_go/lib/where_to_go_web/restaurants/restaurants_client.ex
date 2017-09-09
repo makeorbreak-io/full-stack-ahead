@@ -4,11 +4,9 @@ defmodule WhereToGoWeb.RestaurantsClient do
     def get_restaurants do
         headers = get_authenticated_request_headers()
 
-        bananas = get_cities_to_update()
+        get_cities_to_update()
         |> Enum.flat_map &get_restaurants_by_city(headers, &1)
         |> Enum.uniq_by  fn (c) -> c["name"] end
-        
-        IEx.pry 
     end
 
     defp get_restaurants_by_city(headers, city) do

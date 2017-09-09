@@ -1,14 +1,14 @@
 defmodule PointOfInterest do
   use WhereToGoWeb, :model
 
-  schema "points_of_interest" do
+  schema "point_of_interest" do
     field :name, :string
     field :price, :string
     field :rating_api, :float
     field :url, :string
     field :image_url, :string
     has_many :ratings, Rating
-    has_many :poi_tags, PoiTag
+    has_many :tags, Tag
     timestamps()
   end
 

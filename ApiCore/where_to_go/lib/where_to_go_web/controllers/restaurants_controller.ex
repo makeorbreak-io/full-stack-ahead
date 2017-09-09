@@ -39,19 +39,18 @@ defmodule WhereToGoWeb.RestaurantsController do
 
     def predict(conn, _params) do                                        
         request_url = "http://ai:5000/predict"
-        auth_token = get_req_header(conn, "authorization")
-
+        [auth_token] = get_req_header(conn, "authorization")
         user = Repo.one(from user in User, where: user.token == ^auth_token)
         case user do
             nil -> 
                 conn |> put_status 404
             _ ->
-                body = {:form, [userId: user.userId]}
+                body = {:form, [userId: user.id]}
                 headers = %{"Content-type" => "application/x-www-form-urlencoded"}
                 response = HTTPoison.post!(request_url, body, headers)
                 decoded_response = Poison.decode!(response.body)
 
-                if length(decoded_response) != 0 do
+                if length(decoded_response["data"]) != 0 do
                     ids = Enum.map(decoded_response["data"], fn(r) -> List.first(r) end)
                     
                     restaurants = Repo.all(

@@ -33,7 +33,7 @@ class PlacesRepositoryMariaDB(IPlacesRepository):
 
     def get_dataframe_places(self):
         self.__connect__()
-        self.places_df = pd.read_sql('select id, name from point_of_interest;', con=self.conn)
+        self.places_df = pd.read_sql('select id, name_id from point_of_interest;', con=self.conn)
         self.places_df.columns = [PLACE_ID_STR, TITLE_STR]
         self.places_df[PLACE_INDEX_STR] = self.places_df.index
         print self.places_df.head()

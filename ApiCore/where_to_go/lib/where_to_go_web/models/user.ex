@@ -13,6 +13,6 @@ defmodule User do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:username, :email, :token, :provider])
-    |> validate_required([:email, :token, :provider])
+    |> validate_required([:email, :token])
   end
 end

@@ -4,6 +4,14 @@ A recommendation engine that learns based on your interests and the interests of
 
 Where2.Go consists of a native Android app, which serves as the frontend for a core API and an AI service.
 
+Built by Full Stack Ahead:
+* [Bruno](https://www.linkedin.com/in/bruno-pina-447536a0)
+* [Gonçalo](https://www.linkedin.com/in/goncalojoaocorreia/)
+* [Ricardo](https://www.linkedin.com/in/ricardo-almeida-507b1183/)
+* [Tiago](https://www.linkedin.com/in/tmrocha/)
+
+___
+
 ## Android app
 * Native app built using [Kotlin](https://kotlinlang.org/)
 * Uses several state of the art "standard" libraries, for example:
@@ -31,12 +39,6 @@ Where2.Go consists of a native Android app, which serves as the frontend for a c
 * Also deployed using [Docker](https://www.docker.com/)
 
 _____
-
-Built by Full Stack Ahead:
-* [Bruno](https://www.linkedin.com/in/bruno-pina-447536a0)
-* [Gonçalo](https://www.linkedin.com/in/goncalojoaocorreia/)
-* [Ricardo](https://www.linkedin.com/in/ricardo-almeida-507b1183/)
-* [Tiago](https://www.linkedin.com/in/tmrocha/)
 
 
 ## License

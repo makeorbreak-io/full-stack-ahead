@@ -26,16 +26,15 @@ class CollaborativeFilteringController():
         print "loading data"
         self.places_df = self.placesRepo.get_dataframe_places()
         self.ratings_df = self.ratingsRepo.get_dataframe_ratings()
-        print "Total of places registered %s" % len(self.places_df)
+        #print "Total of places registered %s" % len(self.places_df)
         self.places_ratings_df = self.places_df.merge(self.ratings_df, on='PlaceID') #merge by PlaceID
-        self.places_ratings_df = self.places_ratings_df.drop('Timestamp', axis=1)
-        #ToDo: remove the above line, it's only good to check if the data is correct
-        print self.places_ratings_df
+        #print self.places_ratings_df
         self.user_group_df = self.places_ratings_df.groupby('UserID')
-        print self.user_group_df.first().head()
+        #print self.user_group_df.first().head()
 
     def train(self, hidden_layers = 20):
         print "training"
+        self.__load_data__()
         self.rbm = RestrictedBoltzmannMachine(hidden_layers = hidden_layers, visible_layers=len(self.places_df))
         self.rbm.train(users_group=self.user_group_df, places_df=self.places_df, learning_rate=1.0, epochs=15, batch_size=100, total_user_training=1000 )
         return True

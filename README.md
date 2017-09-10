@@ -37,3 +37,7 @@ Built by Full Stack Ahead:
 * [Gonçalo](https://www.linkedin.com/in/goncalojoaocorreia/)
 * [Ricardo](https://www.linkedin.com/in/ricardo-almeida-507b1183/)
 * [Tiago](https://www.linkedin.com/in/tmrocha/)
+
+
+## License
+This work is licensed under the Apache 2.0 license. See the [LICENSE](https://github.com/portosummerofcode/full-stack-ahead/blob/master/LICENSE) file for more information.

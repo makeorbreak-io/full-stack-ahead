@@ -38,8 +38,9 @@ defmodule WhereToGoWeb.RatingsController do
             status_code = 
               case Repo.insert_or_update(changeset_rating) do
                 {:ok, _changeset} -> 
-                  options = [recv_timeout: 99999999, timeout: 99999999]
-                  HTTPoison.get!("http://ai:5000/train", [], options)
+                  #options = [recv_timeout: 99999999, timeout: 99999999]
+                  #HTTPoison.get!("http://ai:5000/train", [], options)
+                  HTTPoison.get!("http://ai:5000/train", %{}, stream_to: self)
                   200
                 {:error, _changeset} -> 400 
               end

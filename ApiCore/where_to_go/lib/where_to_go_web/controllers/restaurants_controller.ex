@@ -58,7 +58,7 @@ defmodule WhereToGoWeb.RestaurantsController do
                     restaurants = Repo.all(
                         from poi in PointOfInterest,
                         where: poi.id in ^ids,
-                        preload: [:tags])
+                        preload: [:tags, :ratings])
 
                     filtered_response = Enum.filter(restaurants, &filter_func(_params, &1))
 
@@ -67,37 +67,37 @@ defmodule WhereToGoWeb.RestaurantsController do
                         fn(r) ->
                             %{id: round(List.first(r)), predicted_rating: List.last(r)} 
                         end)
-                        encoded_restaurants = Enum.map(Enum.take(filtered_response, 50), &encode_to_map(predicted_ratings, &1))
+                        encoded_restaurants = Enum.map(Enum.take(filtered_response, 50), &encode_to_map(predicted_ratings, user.id, &1))
                         json conn, encoded_restaurants
                     else
                         IO.puts "----------------Hammertime FALLBACK-----------------"
-                        json conn, get_fallback_recommendations(_params)
+                        json conn, get_fallback_recommendations(_params, user.id)
                     end                   
                 else
                     IO.puts "----------------FALLBACK-----------------"
-                    json conn, get_fallback_recommendations(_params)
+                    json conn, get_fallback_recommendations(_params, user.id)
                 end
         end
     end
 
-    defp get_fallback_recommendations(_params) do
+    defp get_fallback_recommendations(_params, userId) do
         restaurants = Repo.all(
             from poi in PointOfInterest,
             order_by: [desc: poi.rating_api],
-            preload: [:tags])
+            preload: [:tags, :ratings])
 
         filtered_response = Enum.filter(restaurants, &filter_func(_params, &1))
 
-        Enum.map(Enum.take(filtered_response, 50), &encode_to_map/1)
+        Enum.map(Enum.take(filtered_response, 50), &encode_to_map(userId, &1))
     end
 
-    defp encode_to_map(predicted_ratings, f_response) do
+    defp encode_to_map(predicted_ratings, userId, f_response) do
         pr = Enum.find(predicted_ratings, fn(pr) -> pr.id == f_response.id end)
 
         %{
             id: f_response.id,
             url: f_response.url,
-            rating: f_response.rating_api,
+            rating: Enum.find(f_response.ratings, fn(r) -> r.user_id == userId end),
             price: f_response.price,
             name: f_response.name,
             image_url: f_response.image_url,
@@ -106,11 +106,11 @@ defmodule WhereToGoWeb.RestaurantsController do
         }
     end
 
-    defp encode_to_map(f_response) do
+    defp encode_to_map(userId, f_response) do
         %{
             id:  f_response.id,
             url: f_response.url,
-            rating: f_response.rating_api,
+            rating: Enum.find(f_response.ratings, fn(r) -> r.user_id == userId end),
             price: f_response.price,
             name: f_response.name,
             image_url: f_response.image_url,

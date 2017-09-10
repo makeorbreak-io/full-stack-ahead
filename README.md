@@ -28,6 +28,7 @@ Where2.Go consists of a native Android app, which serves as the frontend for a c
 * Has a small API built with [Flask](http://flask.pocoo.org/), to allow the Core API to request recommendations
 * Uses a [Restricted Boltzmann Machine](https://en.wikipedia.org/wiki/Restricted_Boltzmann_machine) convolutional neural network to build a preference tree of the various users
 * Uses a Sigmoid function as an activation function, since they "compress" the input to fit in an interval
+* Also deployed using [Docker](https://www.docker.com/)
 
 _____
 

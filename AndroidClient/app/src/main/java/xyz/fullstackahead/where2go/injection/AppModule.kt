@@ -29,7 +29,7 @@ import javax.inject.Singleton
             var request = chain.request()
             request = request.newBuilder()
                     .removeHeader("Authorization")
-                    .addHeader("Authorization", SharedPreferences.currentUser.value?.token)
+                    .addHeader("Authorization", SharedPreferences.currentUser.value?.token ?: "")
                     .removeHeader("Accept")
                     .addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
                     .build()

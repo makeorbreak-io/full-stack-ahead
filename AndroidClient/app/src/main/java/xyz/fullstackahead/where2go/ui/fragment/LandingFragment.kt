@@ -64,7 +64,6 @@ class LandingFragment : BaseFragment() {
         // Setup liveData observers
         viewModel.apiResponse.observe(this, Observer { onAIResponse(it) })
         viewModel.recommendations.observe(this, Observer { onRecommendations(it) })
-        SharedPreferences.currentUser.observe(this, Observer { onUserChanged(it) })
     }
 
 
@@ -154,6 +153,8 @@ class LandingFragment : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         this.menu = menu
+        SharedPreferences.currentUser.observe(this, Observer { onUserChanged(it) })
+
         mainActivity.menuInflater.inflate(R.menu.menu_scrolling, menu)
 
         // Fix search menu icon tint

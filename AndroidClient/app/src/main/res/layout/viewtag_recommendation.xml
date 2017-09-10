@@ -79,28 +79,39 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/keyline_11"
                 android:layout_marginStart="@dimen/keyline_1"
-                android:layout_marginTop="@dimen/keyline_3"
                 android:layout_toEndOf="@id/placeImage"
-                android:orientation="vertical">
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_alignParentTop="true">
 
                 <TextView
                     android:id="@+id/placeTitle"
                     style="@style/PrimaryTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
                     tools:text="@string/placeholder_title" />
 
                 <TextView
                     android:id="@+id/placeCategories"
                     style="@style/SecondaryTextView"
+                    android:maxLines="2"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="@string/placeholder_description" />
 
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/keyline_half"
+                    tools:text="Price: €€" />
             </LinearLayout>
 
             <TextView
@@ -121,18 +132,12 @@
                 android:visibility="gone"
                 tools:visibility="visible">
 
-                <TextView
-                    android:id="@+id/price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/keyline_half"
-                    tools:text="Price: €€" />
 
                 <com.shawnlin.numberpicker.NumberPicker
-                    android:layout_gravity="center_horizontal"
                     android:id="@+id/ratingPicker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     app:np_dividerColor="@color/colorAccent"
                     app:np_height="@dimen/keyline_5"
                     app:np_max="5"
@@ -143,10 +148,10 @@
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btnConfirmRate"
-                    android:layout_gravity="center_horizontal"
                     style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:text="@string/action_rate_btn" />
 
 

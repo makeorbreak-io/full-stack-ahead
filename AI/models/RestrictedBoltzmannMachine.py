@@ -47,7 +47,6 @@ class RestrictedBoltzmannMachine():
             if totalUsersForTraining == 0:
                 break
             totalUsersForTraining = totalUsersForTraining - 1
-        print self.position_userId
         return training_list
 
     def __process_input__(self):
@@ -148,6 +147,6 @@ class RestrictedBoltzmannMachine():
         recommendation = self.session.run(vv1, feed_dict={hh0: feed, self.weights: self.previousWeights, self.visibleBiases: self.previousVisibleBiases})
 
         places_df['Recommendation Score'] = recommendation[0]
-        result = places_df.sort_values(['Recommendation Score'], ascending=False).head(200)
-        print result
+        result = places_df.sort_values(['Recommendation Score'], ascending=False).head(maxResults)
+        #print result
         return result

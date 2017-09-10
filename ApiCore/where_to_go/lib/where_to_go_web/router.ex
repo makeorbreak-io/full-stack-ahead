@@ -18,17 +18,13 @@ defmodule WhereToGoWeb.Router do
     
     get "/", PageController, :index
     post "/login", LoginController, :login
-  end
-
-  scope "/api/v1/", WhereToGoWeb do
-    pipe_through :browser # Use the default browser stack
-
-    get "/", PageController, :index
-    get "/categories", CategoriesController, :get_categories
-    get "/restaurants", RestaurantsController, :update_restaurants
-    get "/predict", RestaurantsController, :predict
-    get "/rating", RatingsController, :train
+    get "/api/v1/categories", CategoriesController, :get_categories
+    get "/api/v1/restaurants", RestaurantsController, :update_restaurants
+    get "/api/v1/predict", RestaurantsController, :predict
+    get "/api/v1/rating", RatingsController, :train
     post "/rating", RatingsController, :add_rating
+
+    get "/*path", ErrorController, :handle_mismatch
   end
 
   # Other scopes may use custom stacks.

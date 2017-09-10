@@ -22,5 +22,8 @@ defmodule WhereToGoWeb.LoginController do
     |> put_status(status_code)
     |> text("")
   end
-
+  
+  def teste(conn, _params) do
+      text conn, "make or break"
+  end
 end

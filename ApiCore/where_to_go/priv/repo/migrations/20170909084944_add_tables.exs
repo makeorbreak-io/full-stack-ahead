@@ -12,7 +12,6 @@ defmodule WhereToGo.Repo.Migrations.AddTables do
     end
     
     create table(:point_of_interest) do
-      add :name_id, :string
       add :city, :string
       add :name, :string
       add :price, :string

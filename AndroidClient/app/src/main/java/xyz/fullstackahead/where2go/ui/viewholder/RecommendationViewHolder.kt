@@ -55,9 +55,14 @@ class RecommendationViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemVi
     }
 
 
-    fun setPredictedRating(rating: Float) {
-        val text = "%.1f".format(rating)
-        predictedRating?.text = Where2GoApp.instance.getString(R.string.place_predicted_rating, text)
+    fun setPredictedRating(rating: Float?) {
+        if (rating == null) {
+            predictedRating?.visibility = GONE
+        } else {
+            predictedRating?.visibility = VISIBLE
+            val text = "%.1f".format(rating * 5)
+            predictedRating?.text = Where2GoApp.instance.getString(R.string.place_predicted_rating, text)
+        }
     }
 
 

@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import xyz.fullstackahead.where2go.R
@@ -28,12 +29,16 @@ import javax.inject.Singleton
             var request = chain.request()
             request = request.newBuilder()
                     .removeHeader("Authorization")
-                    .addHeader("Authorization", SharedPreferences.currentUser.value?.token)
+                    .addHeader("Authorization", SharedPreferences.currentUser.value?.token ?: "")
                     .removeHeader("Accept")
                     .addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
                     .build()
             chain.proceed(request)
         })
+
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        client.addInterceptor(loggingInterceptor)
 
         val retrofit = Retrofit.Builder()
                 .baseUrl(Where2GoApp.instance.getString(R.string.api_base_url))

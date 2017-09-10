@@ -64,7 +64,6 @@ class LandingFragment : BaseFragment() {
         // Setup liveData observers
         viewModel.apiResponse.observe(this, Observer { onAIResponse(it) })
         viewModel.recommendations.observe(this, Observer { onRecommendations(it) })
-        SharedPreferences.currentUser.observe(this, Observer { onUserChanged(it) })
     }
 
 
@@ -75,7 +74,6 @@ class LandingFragment : BaseFragment() {
         setupPermissions()
         setupSearchButton()
         setupRecyclerView()
-        viewModel.getRecommendations()
         viewModel.getCategories()
     }
 
@@ -149,12 +147,19 @@ class LandingFragment : BaseFragment() {
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recommendationsAdapter = RecommendationsAdapter(recyclerView)
         recyclerView.adapter = recommendationsAdapter
+
+        pleaseLoginBtn.setOnClickListener {
+            login()
+        }
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         this.menu = menu
+
         mainActivity.menuInflater.inflate(R.menu.menu_scrolling, menu)
+
+        SharedPreferences.currentUser.observe(this, Observer { onUserChanged(it) })
 
         // Fix search menu icon tint
         tintMenuItem(menu?.findItem(R.id.action_search))
@@ -230,9 +235,13 @@ class LandingFragment : BaseFragment() {
     private fun onUserChanged(user: User?) {
         if (user == null) {
             menu?.findItem(R.id.action_login)?.title = getString(R.string.action_login)
-
+            recyclerView.visibility = GONE
+            pleaseLogIn.visibility = VISIBLE
         } else {
             menu?.findItem(R.id.action_login)?.title = getString(R.string.action_logout, user.email)
+            recyclerView.visibility = VISIBLE
+            pleaseLogIn.visibility = GONE
+            viewModel.getRecommendations()
         }
     }
 

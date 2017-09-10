@@ -12,12 +12,14 @@ import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationServices
+import com.google.gson.Gson
 import retrofit2.Response
 import xyz.fullstackahead.where2go.R
 import xyz.fullstackahead.where2go.pojo.Recommendation
 import xyz.fullstackahead.where2go.Where2GoApp
 import xyz.fullstackahead.where2go.network.ApiClient
 import xyz.fullstackahead.where2go.network.RequestManager
+import xyz.fullstackahead.where2go.persistence.SharedPreferences
 import xyz.fullstackahead.where2go.utils.getAddressFromLocation
 import java.util.*
 import javax.inject.Inject
@@ -55,8 +57,7 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
 
 
     fun getRecommendations() {
-        // TODO network call
-        val list = ArrayList<Recommendation>()
+        /*val list = ArrayList<Recommendation>()
         (1..50).mapTo(list) {
             val rating = Random().nextInt(6).toFloat()
             Recommendation(
@@ -66,7 +67,20 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
                     name = Where2GoApp.instance.getString(R.string.placeholder_title, it),
                     predictedRating = rating)
         }
-        recommendations.postValue(list)
+        recommendations.postValue(list)*/
+
+        loadingCallback.invoke(true)
+        if (SharedPreferences.currentUser.value != null) {
+            getRecommendations(null, null, {
+                loadingCallback.invoke(false)
+                if (it.isSuccessful) {
+                    recommendations.postValue(it.body())
+                } else {
+                    Toast.makeText(Where2GoApp.instance, "Something went wrong, apologies", Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "Error response: " + it.toString())
+                }
+            })
+        }
     }
 
 

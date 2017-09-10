@@ -14,6 +14,7 @@ import xyz.fullstackahead.where2go.network.RequestManager
 import xyz.fullstackahead.where2go.pojo.RateRequest
 import xyz.fullstackahead.where2go.pojo.Recommendation
 import xyz.fullstackahead.where2go.ui.viewholder.RecommendationViewHolder
+import xyz.fullstackahead.where2go.utils.loadImage
 import javax.inject.Inject
 
 class RecommendationsAdapter(
@@ -33,7 +34,7 @@ class RecommendationsAdapter(
 
 
     fun update(data: List<Recommendation>) {
-        this.data = data
+        this.data = data.sortedByDescending { it.predictedRating }
         expandedPosition = -1
         notifyDataSetChanged()
     }
@@ -44,26 +45,36 @@ class RecommendationsAdapter(
     }
 
     override fun onBindViewHolder(holder: RecommendationViewHolder?, position: Int) {
+        if (holder == null) return
         val recommendation = data[position]
-        holder?.placeTitle?.text = recommendation.name
-        holder?.placeCategories?.text = recommendation.categories.joinToString(separator = ", ")
-        // TODO holder?.placeImage
+        holder.placeTitle?.text = recommendation.name
+        holder.placeCategories?.text = recommendation.categories.joinToString(separator = ", ")
+        if (recommendation.imageUrl != null && recommendation.imageUrl.isNotEmpty()) {
+            loadImage(holder.placeImage!!, recommendation.imageUrl)
+        } else {
+            loadImage(holder.placeImage!!, R.drawable.place_placeholder)
+        }
 
-        holder?.setRating(recommendation.userRating.toInt())
-        holder?.setPredictedRating(recommendation.predictedRating)
-        holder?.price?.text = holder?.itemView?.context?.getString(R.string.place_price, recommendation.price)
+        holder.setRating(recommendation.userRating.toInt())
+        holder.setPredictedRating(recommendation.predictedRating)
+        if (recommendation.price != null) {
+            holder.price?.text = holder.itemView?.context?.getString(R.string.place_price, recommendation.price)
+            holder.price?.visibility = VISIBLE
+        } else {
+            holder.price?.visibility = GONE
+        }
 
         val isExpanded = position == expandedPosition
-        holder?.expandedHolder?.visibility = if (isExpanded) VISIBLE else GONE
-        holder?.itemView?.isActivated = isExpanded
-        holder?.showNumberPicker(isExpanded, recommendation.userRating.toInt())
-        holder?.cardView?.setOnClickListener {
+        holder.expandedHolder?.visibility = if (isExpanded) VISIBLE else GONE
+        holder.itemView?.isActivated = isExpanded
+        holder.showNumberPicker(isExpanded, recommendation.userRating.toInt())
+        holder.cardView?.setOnClickListener {
             expandedPosition = if (isExpanded) -1 else position
             TransitionManager.beginDelayedTransition(recyclerView)
             notifyItemChanged(position)
         }
 
-        holder?.confirmRateBtn?.setOnClickListener {
+        holder.confirmRateBtn?.setOnClickListener {
             val value = holder.ratingPicker!!.value
             recommendation.userRating = value.toFloat()
             holder.cardView?.performClick()

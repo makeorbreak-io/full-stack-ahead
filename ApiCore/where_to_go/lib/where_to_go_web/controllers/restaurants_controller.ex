@@ -17,7 +17,6 @@ defmodule WhereToGoWeb.RestaurantsController do
 
     defp poi_to_model(r) do
         poi = %PointOfInterest{
-            name_id: r["id"],
             city: r["city"],
             name: r["name"],
             price: r["price"],
@@ -45,30 +44,35 @@ defmodule WhereToGoWeb.RestaurantsController do
         case user do
             nil -> 
                 conn |> put_status 404
-                |> text("login bitch")
+                |> text("login dude")
             _ ->
                 body = {:form, [userId: user.id]}
                 headers = %{"Content-type" => "application/x-www-form-urlencoded"}
                 response = HTTPoison.post!(request_url, body, headers)
                 decoded_response = Poison.decode!(response.body)
-
+                
                 if length(decoded_response["data"]) != 0 do
-                    ids = Enum.map(decoded_response["data"], fn(r) -> List.first(r) end)
+                    IO.puts "----------------PythonRecommendations-----------------"
+                    ids = Enum.map(decoded_response["data"], fn(r) -> round(List.first(r)) end)
                     
                     restaurants = Repo.all(
                         from poi in PointOfInterest,
                         where: poi.id in ^ids,
-                        limit: 50,
                         preload: [:tags])
 
                     filtered_response = Enum.filter(restaurants, &filter_func(_params, &1))
-            
-                    predicted_ratings = Enum.map(decoded_response["data"], 
-                    fn(r) ->
-                        %{id: List.first(r), predicted_rating: List.last(r)} 
-                    end)
-                    encoded_restaurants = Enum.map(filtered_response, &encode_to_map(predicted_ratings, &1))
-                    json conn, Poison.encode!(encoded_restaurants)
+
+                    if length(filtered_response) != 0 do
+                        predicted_ratings = Enum.map(decoded_response["data"], 
+                        fn(r) ->
+                            %{id: round(List.first(r)), predicted_rating: List.last(r)} 
+                        end)
+                        encoded_restaurants = Enum.map(Enum.take(filtered_response, 50), &encode_to_map(predicted_ratings, &1))
+                        json conn, encoded_restaurants
+                    else
+                        IO.puts "----------------Hammertime FALLBACK-----------------"
+                        json conn, get_fallback_recommendations(_params)
+                    end                   
                 else
                     json conn, get_fallback_recommendations(_params)
                 end
@@ -76,16 +80,15 @@ defmodule WhereToGoWeb.RestaurantsController do
     end
 
     defp get_fallback_recommendations(_params) do
+        IO.puts "----------------FALLBACK-----------------"
         restaurants = Repo.all(
             from poi in PointOfInterest,
             order_by: [desc: poi.rating_api],
-            limit: 50,
             preload: [:tags])
 
         filtered_response = Enum.filter(restaurants, &filter_func(_params, &1))
 
-        encoded_restaurants = Enum.map(filtered_response, &encode_to_map/1)
-        Poison.encode!(encoded_restaurants)
+        Enum.map(Enum.take(filtered_response, 50), &encode_to_map/1)
     end
 
     defp encode_to_map(predicted_ratings, f_response) do
@@ -99,7 +102,7 @@ defmodule WhereToGoWeb.RestaurantsController do
             name: f_response.name,
             image_url: f_response.image_url,
             categories: Enum.map(f_response.tags, fn(t) -> t.name end),
-            predicted_rating: pr
+            predicted_rating: pr.predicted_rating
         }
     end
 

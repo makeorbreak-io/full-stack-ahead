@@ -14,7 +14,7 @@ interface ApiClient {
     @POST("/login")
     fun login(@Body user: User): Call<Void>
 
-    @POST("/api/v1/ratings")
+    @POST("/api/v1/rating")
     fun rate(@Body request: RateRequest): Call<Void>
 
     @GET("/api/v1/categories")

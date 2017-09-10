@@ -98,10 +98,15 @@ defmodule WhereToGoWeb.RestaurantsController do
     defp encode_to_map(predicted_ratings, userId, f_response) do
         pr = Enum.find(predicted_ratings, fn(pr) -> pr.id == f_response.id end)
 
+        rating =
+            case Enum.find(f_response.ratings, fn(r) -> r.user_id == userId end) do
+               nil  -> 0
+               elem -> elem.rating
+            end
         %{
             id: f_response.id,
             url: f_response.url,
-            rating: Enum.find(f_response.ratings, fn(r) -> r.user_id == userId end).rating,
+            rating: rating,
             price: f_response.price,
             name: f_response.name,
             image_url: f_response.image_url,
@@ -111,10 +116,16 @@ defmodule WhereToGoWeb.RestaurantsController do
     end
 
     defp encode_to_map(userId, f_response) do
+        rating =
+        case Enum.find(f_response.ratings, fn(r) -> r.user_id == userId end) do
+           nil  -> 0
+           elem -> elem.rating
+        end
+
         %{
             id:  f_response.id,
             url: f_response.url,
-            rating: Enum.find(f_response.ratings, fn(r) -> r.user_id == userId end).rating,
+            rating: rating,
             price: f_response.price,
             name: f_response.name,
             image_url: f_response.image_url,

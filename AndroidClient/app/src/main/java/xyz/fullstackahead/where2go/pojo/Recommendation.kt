@@ -9,7 +9,7 @@ data class Recommendation(
         val price: String = "",
         val name: String = "",
         @SerializedName("image_url")
-        val imageUrl: String = "",
+        val imageUrl: String? = null,
         val categories: List<String> = emptyList(),
         @SerializedName("predicted_rating")
         val predictedRating: Float = 0F

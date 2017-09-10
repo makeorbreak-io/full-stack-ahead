@@ -14,9 +14,11 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_search.*
 import xyz.fullstackahead.where2go.R
 import xyz.fullstackahead.where2go.Where2GoApp
+import xyz.fullstackahead.where2go.pojo.Recommendation
 import xyz.fullstackahead.where2go.ui.viewmodel.LandingViewModel
 
 class SearchDialogFragment : DialogFragment(), LifecycleRegistryOwner {
@@ -52,9 +54,11 @@ class SearchDialogFragment : DialogFragment(), LifecycleRegistryOwner {
             viewModel.getRecommendations(city, category, {
                 showProgress(false)
                 if (it.isSuccessful) {
+                    //val parsedPlaces = Gson().fromJson<List<Recommendation>>(it.body(), List::class.java)
                     viewModel.recommendations.postValue(it.body())
                 } else {
                     Toast.makeText(context, "Something went wrong, apologies", Toast.LENGTH_SHORT).show()
+                    Log.d(LandingViewModel.TAG, "Error response: " + it.toString())
                 }
                 dismiss()
             })

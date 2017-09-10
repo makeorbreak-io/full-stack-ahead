@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import xyz.fullstackahead.where2go.R
@@ -34,6 +35,10 @@ import javax.inject.Singleton
                     .build()
             chain.proceed(request)
         })
+
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        client.addInterceptor(loggingInterceptor)
 
         val retrofit = Retrofit.Builder()
                 .baseUrl(Where2GoApp.instance.getString(R.string.api_base_url))

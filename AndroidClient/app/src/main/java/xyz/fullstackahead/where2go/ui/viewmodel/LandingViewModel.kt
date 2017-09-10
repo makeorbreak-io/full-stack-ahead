@@ -12,6 +12,7 @@ import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationServices
+import com.google.gson.Gson
 import retrofit2.Response
 import xyz.fullstackahead.where2go.R
 import xyz.fullstackahead.where2go.pojo.Recommendation

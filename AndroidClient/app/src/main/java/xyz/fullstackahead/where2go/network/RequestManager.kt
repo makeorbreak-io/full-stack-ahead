@@ -1,5 +1,6 @@
 package xyz.fullstackahead.where2go.network
 
+import android.util.Log
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,7 +22,9 @@ object RequestManager {
                 response?.let(onSuccess)
             }
 
-            override fun onFailure(call: Call<T>?, t: Throwable?) {}
+            override fun onFailure(call: Call<T>?, t: Throwable?) {
+                Log.d("RequestManager", "Call failure: " + t?.message)
+            }
         })
     }
 }

@@ -74,13 +74,13 @@ defmodule WhereToGoWeb.RestaurantsController do
                         json conn, get_fallback_recommendations(_params)
                     end                   
                 else
-                    json conn, get_fallback_recommendations(_params)
+                    IO.puts "----------------FALLBACK-----------------"
+                    json conn, get_fallback_recomme0ndations(_params)
                 end
         end
     end
 
     defp get_fallback_recommendations(_params) do
-        IO.puts "----------------FALLBACK-----------------"
         restaurants = Repo.all(
             from poi in PointOfInterest,
             order_by: [desc: poi.rating_api],

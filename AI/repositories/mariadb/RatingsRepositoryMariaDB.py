@@ -6,7 +6,6 @@ from repositories.IRatingsRepository import IRatingRepository
 USER_ID_STR = 'UserID'
 PLACE_ID_STR = 'PlaceID'
 RATING_STR = 'Rating'
-TIMESTAMP_STR = 'Timestamp'
 
 class RatingsRepositoryMariaDB(IRatingRepository):
 
@@ -33,8 +32,8 @@ class RatingsRepositoryMariaDB(IRatingRepository):
 
     def get_dataframe_ratings(self):
         self.__connect__()
-        self.ratings_df = pd.read_sql('select user_id, point_of_interest_id, rating, updated_at from ratings;', con=self.conn)
-        self.ratings_df.columns = [USER_ID_STR, PLACE_ID_STR, RATING_STR, TIMESTAMP_STR]
+        self.ratings_df = pd.read_sql('select user_id, point_of_interest_id, rating from ratings;', con=self.conn)
+        self.ratings_df.columns = [USER_ID_STR, PLACE_ID_STR, RATING_STR]
         print self.ratings_df.head()
         self.__disconnect__()
         return self.ratings_df

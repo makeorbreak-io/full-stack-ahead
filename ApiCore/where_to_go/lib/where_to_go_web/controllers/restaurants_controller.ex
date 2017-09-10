@@ -101,7 +101,7 @@ defmodule WhereToGoWeb.RestaurantsController do
         %{
             id: f_response.id,
             url: f_response.url,
-            rating: Enum.find(f_response.ratings, fn(r) -> r.user_id == userId end),
+            rating: Enum.find(f_response.ratings, fn(r) -> r.user_id == userId end).rating,
             price: f_response.price,
             name: f_response.name,
             image_url: f_response.image_url,
@@ -114,7 +114,7 @@ defmodule WhereToGoWeb.RestaurantsController do
         %{
             id:  f_response.id,
             url: f_response.url,
-            rating: Enum.find(f_response.ratings, fn(r) -> r.user_id == userId end),
+            rating: Enum.find(f_response.ratings, fn(r) -> r.user_id == userId end).rating,
             price: f_response.price,
             name: f_response.name,
             image_url: f_response.image_url,

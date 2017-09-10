@@ -83,8 +83,7 @@ defmodule WhereToGoWeb.RestaurantsController do
 
         filtered_response = Enum.filter(restaurants, &filter_func(_params, &1))
 
-        encoded_restaurants = Enum.map(filtered_response, &encode_to_map/1)
-        encoded_restaurants
+        Enum.map(filtered_response, &encode_to_map/1)
     end
 
     defp encode_to_map(predicted_ratings, f_response) do
@@ -98,7 +97,7 @@ defmodule WhereToGoWeb.RestaurantsController do
             name: f_response.name,
             image_url: f_response.image_url,
             categories: Enum.map(f_response.tags, fn(t) -> t.name end),
-            predicted_rating: pr
+            predicted_rating: pr.predicted_rating
         }
     end
 

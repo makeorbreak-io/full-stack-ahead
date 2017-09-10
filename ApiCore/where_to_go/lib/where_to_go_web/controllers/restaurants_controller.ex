@@ -71,6 +71,7 @@ defmodule WhereToGoWeb.RestaurantsController do
                         encoded_restaurants = Enum.map(Enum.take(filtered_response, 50), &encode_to_map(predicted_ratings, user.id, &1)) 
                         
                         IO.puts "----------------This little piggy is blowing up-----------------"
+                        IO.inspect encoded_restaurants
                         json conn, encoded_restaurants
                     else
                         IO.puts "----------------Hammertime FALLBACK-----------------"

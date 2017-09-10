@@ -6,10 +6,10 @@ data class Recommendation(
         val id: String = "",
         @SerializedName("rating")
         var userRating: Float = 0F,
-        val price: String = "",
+        val price: String? = null,
         val name: String = "",
         @SerializedName("image_url")
-        val imageUrl: String = "",
+        val imageUrl: String? = null,
         val categories: List<String> = emptyList(),
         @SerializedName("predicted_rating")
         val predictedRating: Float = 0F

@@ -1,8 +1,16 @@
-# Full Stack Ahead presents Where2.Go
+# Where2.Go
 
 A recommendation engine that learns based on your interests and the interests of other users. Currently working with restaurants and other food-related businesses, based on data returned by the [Yelp public API](https://www.yelp.com/developers/documentation/v3).
 
 Where2.Go consists of a native Android app, which serves as the frontend for a core API and an AI service.
+
+Built by Full Stack Ahead:
+* [Bruno](https://www.linkedin.com/in/bruno-pina-447536a0)
+* [Gonçalo](https://www.linkedin.com/in/goncalojoaocorreia/)
+* [Ricardo](https://www.linkedin.com/in/ricardo-almeida-507b1183/)
+* [Tiago](https://www.linkedin.com/in/tmrocha/)
+
+___
 
 ## Android app
 * Native app built using [Kotlin](https://kotlinlang.org/)
@@ -31,12 +39,6 @@ Where2.Go consists of a native Android app, which serves as the frontend for a c
 * Also deployed using [Docker](https://www.docker.com/)
 
 _____
-
-Built by Full Stack Ahead:
-* [Bruno](https://www.linkedin.com/in/bruno-pina-447536a0)
-* [Gonçalo](https://www.linkedin.com/in/goncalojoaocorreia/)
-* [Ricardo](https://www.linkedin.com/in/ricardo-almeida-507b1183/)
-* [Tiago](https://www.linkedin.com/in/tmrocha/)
 
 
 ## License

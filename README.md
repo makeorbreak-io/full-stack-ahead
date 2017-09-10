@@ -1,4 +1,4 @@
-# Full Stack Ahead presents Where2.Go
+# Where2.Go
 
 A recommendation engine that learns based on your interests and the interests of other users. Currently working with restaurants and other food-related businesses, based on data returned by the [Yelp public API](https://www.yelp.com/developers/documentation/v3).
 

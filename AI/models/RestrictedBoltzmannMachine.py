@@ -134,7 +134,7 @@ class RestrictedBoltzmannMachine():
             print "Error get user position"
             return -1
         
-    def predict(self, places_df, userId, maxResults = 50):
+    def predict(self, places_df, userId, maxResults = 200):
         """Input Reconstruction"""
         userPosition = self.__get_user_position_by_id__(userId)
         if userPosition < 0:

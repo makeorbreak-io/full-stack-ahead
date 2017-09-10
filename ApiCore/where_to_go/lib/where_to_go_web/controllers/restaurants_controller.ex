@@ -75,7 +75,7 @@ defmodule WhereToGoWeb.RestaurantsController do
                     end                   
                 else
                     IO.puts "----------------FALLBACK-----------------"
-                    json conn, get_fallback_recomme0ndations(_params)
+                    json conn, get_fallback_recommendations(_params)
                 end
         end
     end

@@ -127,11 +127,11 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
             ACTION_FIND_PLACES -> {
                 var city: String? = null
                 var category: String? = null
-                if (result.result!!.parameters!!.containsKey(PARAM_CITY)) {
+                /*if (result.result!!.parameters!!.containsKey(PARAM_CITY)) {
                     city = result.result.parameters[PARAM_CITY]?.asString
-                }
+                }*/
                 if (result.result!!.parameters!!.containsKey(PARAM_CATEGORY)) {
-                    category = result.result.parameters[PARAM_CATEGORY]?.asString
+                    category = getCategory(result.result.parameters[PARAM_CATEGORY]?.asString)
                 }
                 loadingCallback.invoke(true)
                 getRecommendations(city, category, {
@@ -146,6 +146,14 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
             }
         }
     }
+
+
+    private fun getCategory(query: String?): String? {
+        if (query == null) return null
+        val currentCategories = categories.value!!
+        return currentCategories.firstOrNull { it.contains(query, true) }
+    }
+
 
     override fun onError(error: AIError?) {
         Log.d(TAG, "API.AI - onResult")

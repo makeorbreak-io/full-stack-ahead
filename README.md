@@ -4,6 +4,9 @@ A recommendation engine that learns based on your interests and the interests of
 
 Where2.Go consists of a native Android app, which serves as the frontend for a core API and an AI service.
 
+![](https://i.imgur.com/LriJBou.png)
+![](https://i.imgur.com/QNb56DV.png)
+
 Built by Full Stack Ahead:
 * [Bruno](https://www.linkedin.com/in/bruno-pina-447536a0)
 * [Gonçalo](https://www.linkedin.com/in/goncalojoaocorreia/)
@@ -23,6 +26,9 @@ ___
 * Uses the device's location to suggest places near the user by default
 * NLP allows for easy hands-free operation
 * UI built following Google's [Material Design](https://material.io/guidelines/) guidelines
+
+![](https://i.imgur.com/HGn1BeG.png)
+
 
 ## Core API
 * Built using [Elixir](https://elixir-lang.org/)

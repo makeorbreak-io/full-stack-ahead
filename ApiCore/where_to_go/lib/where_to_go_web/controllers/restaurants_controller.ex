@@ -61,13 +61,18 @@ defmodule WhereToGoWeb.RestaurantsController do
                         preload: [:tags])
 
                     filtered_response = Enum.filter(restaurants, &filter_func(_params, &1))
-            
-                    predicted_ratings = Enum.map(decoded_response["data"], 
-                    fn(r) ->
-                        %{id: round(List.first(r)), predicted_rating: List.last(r)} 
-                    end)
-                    encoded_restaurants = Enum.map(Enum.take(filtered_response, 50), &encode_to_map(predicted_ratings, &1))
-                    json conn, encoded_restaurants
+
+                    if length(filtered_response) != 0 do
+                        predicted_ratings = Enum.map(decoded_response["data"], 
+                        fn(r) ->
+                            %{id: round(List.first(r)), predicted_rating: List.last(r)} 
+                        end)
+                        encoded_restaurants = Enum.map(Enum.take(filtered_response, 50), &encode_to_map(predicted_ratings, &1))
+                        json conn, encoded_restaurants
+                    else
+                        IO.puts "----------------Hammertime FALLBACK-----------------"
+                        json conn, get_fallback_recommendations(_params)
+                    end                   
                 else
                     json conn, get_fallback_recommendations(_params)
                 end

@@ -58,6 +58,7 @@ class RecommendationViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemVi
     fun setPredictedRating(rating: Float?) {
         if (rating == null) {
             predictedRating?.visibility = GONE
+            predictedRating?.text = ""
         } else {
             predictedRating?.visibility = VISIBLE
             val text = "%.1f".format(rating * 5)

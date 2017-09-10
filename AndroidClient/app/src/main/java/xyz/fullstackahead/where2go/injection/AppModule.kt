@@ -11,6 +11,7 @@ import xyz.fullstackahead.where2go.R
 import xyz.fullstackahead.where2go.Where2GoApp
 import xyz.fullstackahead.where2go.network.ApiClient
 import xyz.fullstackahead.where2go.persistence.SharedPreferences
+import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -39,6 +40,10 @@ import javax.inject.Singleton
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         client.addInterceptor(loggingInterceptor)
+
+        client.connectTimeout(99999999, TimeUnit.MILLISECONDS)
+        client.readTimeout(99999999, TimeUnit.MILLISECONDS)
+        client.writeTimeout(99999999, TimeUnit.MILLISECONDS)
 
         val retrofit = Retrofit.Builder()
                 .baseUrl(Where2GoApp.instance.getString(R.string.api_base_url))

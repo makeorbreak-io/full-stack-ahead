@@ -4,6 +4,7 @@ import ai.api.android.AIConfiguration
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import xyz.fullstackahead.where2go.R
+import xyz.fullstackahead.where2go.Where2GoApp
 import xyz.fullstackahead.where2go.extensions.app
 import xyz.fullstackahead.where2go.ui.fragment.base.BaseFragment
 import xyz.fullstackahead.where2go.ui.fragment.LandingFragment
@@ -16,6 +17,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         app.component.inject(this)
+
+        Where2GoApp.instance.mainActivity = this
 
         configAI = AIConfiguration(
                 application.getString(R.string.api_ai_access_token),

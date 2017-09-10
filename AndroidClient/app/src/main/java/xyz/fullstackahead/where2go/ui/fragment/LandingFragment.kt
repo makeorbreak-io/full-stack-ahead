@@ -172,7 +172,7 @@ class LandingFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_search -> performSearch()
-            R.id.action_settings -> Log.d(TAG, "actionSettings")
+            R.id.action_train -> viewModel.trainAI()
             R.id.action_test_location -> {
                 val location = viewModel.getLocation()
                 val latitude = location?.latitude

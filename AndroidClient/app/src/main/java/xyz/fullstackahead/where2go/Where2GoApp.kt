@@ -4,6 +4,7 @@ import android.app.Application
 import xyz.fullstackahead.where2go.injection.AppModule
 import xyz.fullstackahead.where2go.injection.DaggerMainComponent
 import xyz.fullstackahead.where2go.injection.MainComponent
+import xyz.fullstackahead.where2go.ui.activity.MainActivity
 
 class Where2GoApp : Application() {
 
@@ -19,4 +20,6 @@ class Where2GoApp : Application() {
         super.onCreate()
         instance = this
     }
+
+    var mainActivity: MainActivity? = null
 }

@@ -3,7 +3,6 @@ package xyz.fullstackahead.where2go.ui.adapter
 import android.support.v7.widget.RecyclerView
 import android.transition.TransitionManager
 import android.view.LayoutInflater
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
@@ -20,6 +19,10 @@ import javax.inject.Inject
 class RecommendationsAdapter(
         private val recyclerView: RecyclerView
 ) : RecyclerView.Adapter<RecommendationViewHolder>() {
+
+    companion object {
+        const val TAG = "RecommendationsAdapter"
+    }
 
     var data: List<Recommendation> = emptyList()
 

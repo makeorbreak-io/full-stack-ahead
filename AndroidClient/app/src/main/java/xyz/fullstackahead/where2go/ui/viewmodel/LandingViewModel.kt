@@ -12,16 +12,14 @@ import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationServices
-import com.google.gson.Gson
 import retrofit2.Response
-import xyz.fullstackahead.where2go.R
-import xyz.fullstackahead.where2go.pojo.Recommendation
 import xyz.fullstackahead.where2go.Where2GoApp
 import xyz.fullstackahead.where2go.network.ApiClient
 import xyz.fullstackahead.where2go.network.RequestManager
 import xyz.fullstackahead.where2go.persistence.SharedPreferences
+import xyz.fullstackahead.where2go.pojo.Recommendation
+import xyz.fullstackahead.where2go.ui.fragment.LoadingDialogFragment
 import xyz.fullstackahead.where2go.utils.getAddressFromLocation
-import java.util.*
 import javax.inject.Inject
 
 class LandingViewModel(application: Application?) : AndroidViewModel(application), AIDialog.AIDialogListener {
@@ -85,12 +83,12 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
 
 
     fun getRecommendations(city: String?, category: String?, callback: (response: Response<List<Recommendation>>) -> Unit) {
-        RequestManager.execute(apiClient.getRecommendation(city, category), callback)
+        RequestManager.enqueue(apiClient.getRecommendation(city, category), callback)
     }
 
 
     fun getCategories() {
-        RequestManager.execute(apiClient.getCategories(), {
+        RequestManager.enqueue(apiClient.getCategories(), {
             if (it.isSuccessful) {
                 categories.postValue(it.body())
             }
@@ -151,5 +149,13 @@ class LandingViewModel(application: Application?) : AndroidViewModel(application
 
     override fun onError(error: AIError?) {
         Log.d(TAG, "API.AI - onResult")
+    }
+
+    fun trainAI() {
+        LoadingDialogFragment.show("Training AI, please wait..", Where2GoApp.instance.mainActivity!!.supportFragmentManager)
+        RequestManager.enqueue(apiClient.train(), {
+            LoadingDialogFragment.hide()
+            if (!it.isSuccessful) Log.d(TAG, "Failed AI training: " + it.toString())
+        })
     }
 }

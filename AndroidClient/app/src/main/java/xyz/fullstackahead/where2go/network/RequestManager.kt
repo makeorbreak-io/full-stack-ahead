@@ -15,7 +15,7 @@ object RequestManager {
     }
 
 
-    fun <T : Any> execute(call: Call<T>, onSuccess: (response: Response<T>) -> Unit) {
+    fun <T : Any> enqueue(call: Call<T>, onSuccess: (response: Response<T>) -> Unit) {
         call.enqueue(object : Callback<T> {
 
             override fun onResponse(call: Call<T>?, response: Response<T>?) {

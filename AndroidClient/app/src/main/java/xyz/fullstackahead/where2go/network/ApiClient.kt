@@ -17,6 +17,9 @@ interface ApiClient {
     @POST("/api/v1/rating")
     fun rate(@Body request: RateRequest): Call<Void>
 
+    @GET("/api/v1/rating")
+    fun train(): Call<Void>
+
     @GET("/api/v1/categories")
     fun getCategories(): Call<List<String>>
 

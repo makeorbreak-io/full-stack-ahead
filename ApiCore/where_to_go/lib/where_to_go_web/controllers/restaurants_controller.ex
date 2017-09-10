@@ -67,7 +67,7 @@ defmodule WhereToGoWeb.RestaurantsController do
                         %{id: round(List.first(r)), predicted_rating: List.last(r)} 
                     end)
                     encoded_restaurants = Enum.map(filtered_response, &encode_to_map(predicted_ratings, &1))
-                    json conn, Poison.encode!(encoded_restaurants)
+                    json conn, String.slice(Poison.encode!(encoded_restaurants), 1..-2) 
                 else
                     json conn, get_fallback_recommendations(_params)
                 end
@@ -84,7 +84,7 @@ defmodule WhereToGoWeb.RestaurantsController do
         filtered_response = Enum.filter(restaurants, &filter_func(_params, &1))
 
         encoded_restaurants = Enum.map(filtered_response, &encode_to_map/1)
-        Poison.encode!(encoded_restaurants)
+        String.slice(Poison.encode!(encoded_restaurants), 1..-2)
     end
 
     defp encode_to_map(predicted_ratings, f_response) do

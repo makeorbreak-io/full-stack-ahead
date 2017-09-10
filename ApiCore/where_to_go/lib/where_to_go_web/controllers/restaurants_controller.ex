@@ -52,12 +52,12 @@ defmodule WhereToGoWeb.RestaurantsController do
                 decoded_response = Poison.decode!(response.body)
                 
                 if length(decoded_response["data"]) != 0 do
+                    IO.puts "----------------PythonRecommendations-----------------"
                     ids = Enum.map(decoded_response["data"], fn(r) -> round(List.first(r)) end)
                     
                     restaurants = Repo.all(
                         from poi in PointOfInterest,
                         where: poi.id in ^ids,
-                        limit: 50,
                         preload: [:tags])
 
                     filtered_response = Enum.filter(restaurants, &filter_func(_params, &1))
@@ -75,6 +75,7 @@ defmodule WhereToGoWeb.RestaurantsController do
     end
 
     defp get_fallback_recommendations(_params) do
+        IO.puts "----------------FALLBACK-----------------"
         restaurants = Repo.all(
             from poi in PointOfInterest,
             order_by: [desc: poi.rating_api],

@@ -4,9 +4,12 @@ defmodule WhereToGoWeb.RatingsController do
   import WhereToGo.Repo
   alias WhereToGo.Repo
 
-  def train do
+  def train(conn, _params) do
     options = [recv_timeout: 99999999, timeout: 99999999]
     HTTPoison.get!("http://ai:5000/train", [], options)
+    conn
+    |> put_status(200)
+    |> text("Trained")
   end
 
   def add_rating(conn, %{"place_id" => place_id, "rating" => rating} = params) do

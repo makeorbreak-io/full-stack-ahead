@@ -52,7 +52,7 @@ defmodule WhereToGoWeb.RestaurantsController do
                 decoded_response = Poison.decode!(response.body)
 
                 if length(decoded_response["data"]) != 0 do
-                    ids = Enum.map(decoded_response["data"], fn(r) -> List.first(r) end)
+                    ids = Enum.map(decoded_response["data"], fn(r) -> round(List.first(r)) end)
                     
                     restaurants = Repo.all(
                         from poi in PointOfInterest,
@@ -64,7 +64,7 @@ defmodule WhereToGoWeb.RestaurantsController do
             
                     predicted_ratings = Enum.map(decoded_response["data"], 
                     fn(r) ->
-                        %{id: List.first(r), predicted_rating: List.last(r)} 
+                        %{id: round(List.first(r)), predicted_rating: List.last(r)} 
                     end)
                     encoded_restaurants = Enum.map(filtered_response, &encode_to_map(predicted_ratings, &1))
                     json conn, Poison.encode!(encoded_restaurants)

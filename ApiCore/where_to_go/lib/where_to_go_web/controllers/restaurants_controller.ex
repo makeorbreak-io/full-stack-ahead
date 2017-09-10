@@ -59,16 +59,19 @@ defmodule WhereToGoWeb.RestaurantsController do
                         from poi in PointOfInterest,
                         where: poi.id in ^ids,
                         preload: [:tags, :ratings])
-
-                    IO.puts "----------------Before python query-----------------"    
+ 
                     filtered_response = Enum.filter(restaurants, &filter_func(_params, &1))
-                    IO.puts "----------------After python query-----------------"   
+
                     if length(filtered_response) != 0 do
-                        predicted_ratings = Enum.map(decoded_response["data"], 
+                        predicted_ratings = Enum.map(decoded_response["data"],
                         fn(r) ->
                             %{id: round(List.first(r)), predicted_rating: List.last(r)} 
                         end)
+                        
+                        IO.puts "----------------After predicted ratings-----------------"   
                         encoded_restaurants = Enum.map(Enum.take(filtered_response, 50), &encode_to_map(predicted_ratings, user.id, &1))
+                        IO.puts "----------------After encoded restaurantss-----------------"  
+                        
                         json conn, encoded_restaurants
                     else
                         IO.puts "----------------Hammertime FALLBACK-----------------"

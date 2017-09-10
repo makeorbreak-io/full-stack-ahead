@@ -34,7 +34,7 @@ class RecommendationsAdapter(
 
 
     fun update(data: List<Recommendation>) {
-        this.data = data
+        this.data = data.sortedByDescending { it.predictedRating }
         expandedPosition = -1
         notifyDataSetChanged()
     }

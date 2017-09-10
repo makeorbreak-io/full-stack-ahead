@@ -12,5 +12,5 @@ data class Recommendation(
         val imageUrl: String? = null,
         val categories: List<String> = emptyList(),
         @SerializedName("predicted_rating")
-        val predictedRating: Float = 0F
+        val predictedRating: Float? = null
 )

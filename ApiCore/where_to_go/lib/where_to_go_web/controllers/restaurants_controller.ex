@@ -67,11 +67,10 @@ defmodule WhereToGoWeb.RestaurantsController do
                         fn(r) ->
                             %{id: round(List.first(r)), predicted_rating: List.last(r)} 
                         end)
+ 
+                        encoded_restaurants = Enum.map(Enum.take(filtered_response, 50), &encode_to_map(predicted_ratings, user.id, &1)) 
                         
-                        IO.puts "----------------After predicted ratings-----------------"   
-                        encoded_restaurants = Enum.map(Enum.take(filtered_response, 50), &encode_to_map(predicted_ratings, user.id, &1))
-                        IO.puts "----------------After encoded restaurantss-----------------"  
-                        
+                        IO.puts "----------------This little piggy is blowing up-----------------"
                         json conn, encoded_restaurants
                     else
                         IO.puts "----------------Hammertime FALLBACK-----------------"

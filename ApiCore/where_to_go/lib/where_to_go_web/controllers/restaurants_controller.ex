@@ -60,8 +60,9 @@ defmodule WhereToGoWeb.RestaurantsController do
                         where: poi.id in ^ids,
                         preload: [:tags, :ratings])
 
+                    IO.puts "----------------Before python query-----------------"    
                     filtered_response = Enum.filter(restaurants, &filter_func(_params, &1))
-
+                    IO.puts "----------------After python query-----------------"   
                     if length(filtered_response) != 0 do
                         predicted_ratings = Enum.map(decoded_response["data"], 
                         fn(r) ->

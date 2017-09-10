@@ -148,6 +148,6 @@ class RestrictedBoltzmannMachine():
         recommendation = self.session.run(vv1, feed_dict={hh0: feed, self.weights: self.previousWeights, self.visibleBiases: self.previousVisibleBiases})
 
         places_df['Recommendation Score'] = recommendation[0]
-        result = places_df.sort_values(['Recommendation Score'], ascending=False)
+        result = places_df.sort_values(['Recommendation Score'], ascending=False).head(200)
         print result
         return result

@@ -98,6 +98,7 @@ class LoginDialogFragment : DialogFragment(), LifecycleRegistryOwner {
                             val newUser = User(email = user.email!!, token = it.result!!.token!!)
                             SharedPreferences.storeCurrentUser(newUser)
                             RequestManager.enqueue(apiClient.login(newUser))
+                            dismiss()
                         } else if (it.exception != null) {
                             Toast.makeText(activity, it.exception!!.message, Toast.LENGTH_SHORT).show()
                             showProgress(false)

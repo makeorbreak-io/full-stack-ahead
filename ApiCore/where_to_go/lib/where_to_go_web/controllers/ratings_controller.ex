@@ -4,6 +4,14 @@ defmodule WhereToGoWeb.RatingsController do
   import WhereToGo.Repo
   alias WhereToGo.Repo
 
+  def train(conn, _params) do
+    options = [recv_timeout: 99999999, timeout: 99999999]
+    HTTPoison.get!("http://ai:5000/train", [], options)
+    conn
+    |> put_status(200)
+    |> text("Trained")
+  end
+
   def add_rating(conn, %{"place_id" => place_id, "rating" => rating} = params) do
     [auth_token] = get_req_header(conn, "authorization")
 
@@ -37,10 +45,7 @@ defmodule WhereToGoWeb.RatingsController do
 
             status_code = 
               case Repo.insert_or_update(changeset_rating) do
-                {:ok, _changeset} -> 
-                  options = [recv_timeout: 99999999, timeout: 99999999]
-                  HTTPoison.get!("http://ai:5000/train", [], options)
-                  200
+                {:ok, _changeset} -> 200
                 {:error, _changeset} -> 400 
               end
 
